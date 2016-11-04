@@ -29,6 +29,7 @@
         <module>common-util/common-hbase</module>
         <module>common-util/common-log</module>
         <module>common-util/common-mail</module>
+        <module>common-util/common-utils</module>
         <module>sms/sms-user</module>
     </modules>
     <packaging>pom</packaging>

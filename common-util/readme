@@ -11,3 +11,4 @@ common-spark spark 常用的封装的公用的一些工具类
 common-swagger swagger常用的封装的公用的一些工具类
 common-log  log4j,logback常用的封装的公用的一些工具类
 common-mail 邮箱常用的封装的公用的一些工具类
+common-utils 常用的一些工具集合的工具类

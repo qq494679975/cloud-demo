@@ -1,0 +1,64 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: discovery
+
+  cloud:
+    config:
+      enabled: false
+
+  jmx:
+    enabled: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+    validation-query: SELECT 1
+    test-on-borrow: true
+
+  session:
+    store-type: HASH_MAP
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false #是否注册自身到eureka服务器
+    fetch-registry: false #是否从eureka服务器获取注册信息
+    serviceUrl:
+      defaultZone: http://127.0.0.1:${server.port}/eureka/  #eureka服务器所在的地址，查询服务和注册服务都需要依赖这个地址
+
+info:
+  app:
+    name: DiscoveryService
+    description: EHR platform global discovery service
+    version: 1.0.0
+
+
+---
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://172.19.103.77/wlyy?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: 123456
+
+---
+spring:
+  profiles: home
+
+  datasource:
+      url: jdbc:mysql://192.168.88.93/session?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+      username: root
+      password: 123456
+

@@ -1,0 +1,18 @@
+spring:
+  mail:
+     default-encoding: utf8
+     protocol: smtp
+     host: smtp.qq.com
+     port: 465
+     username: 1501877145 # 发送者要开启POP3/SMTP服务
+     from: 1501877145@qq.com
+     to: 494679975@qq.com,463166875@qq.com #接受者，多个接受逗号分隔,接受者邮箱要开启IMAP/SMTP服务(不开可能会在垃圾箱)
+     password: pnubhfagxeophfej #如果是腾讯邮箱的话这个是授权码
+     properties:
+       mail:
+         transport:
+         smtp:
+           auth: true #是否开始权限验证
+           ssl:
+             enable: true #使用sslmail.transport.protocol
+

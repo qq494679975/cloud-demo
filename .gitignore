@@ -1,0 +1,44 @@
+#project files
+ehr.ipr
+ehr.iws
+ehr.ids
+*.html
+*.iml
+ehr.iml
+*/target
+.idea/*
+spring-cloud/.idea/*
+
+
+# ---> Java
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*#
+
+# thrift generate code
+commons-thrift-services/src/main/java/com/yihu/ehr/adaption
+commons-thrift-services/src/main/java/com/yihu/ehr/app
+commons-thrift-services/src/main/java/com/yihu/ehr/browser
+commons-thrift-services/src/main/java/com/yihu/ehr/data/domain
+commons-thrift-services/src/main/java/com/yihu/ehr/dict
+commons-thrift-services/src/main/java/com/yihu/ehr/geography
+commons-thrift-services/src/main/java/com/yihu/ehr/hadoop
+commons-thrift-services/src/main/java/com/yihu/ehr/lang
+commons-thrift-services/src/main/java/com/yihu/ehr/org
+commons-thrift-services/src/main/java/com/yihu/ehr/pack
+commons-thrift-services/src/main/java/com/yihu/ehr/patient
+commons-thrift-services/src/main/java/com/yihu/ehr/profile
+commons-thrift-services/src/main/java/com/yihu/ehr/resolve
+commons-thrift-services/src/main/java/com/yihu/ehr/resource
+commons-thrift-services/src/main/java/com/yihu/ehr/security
+commons-thrift-services/src/main/java/com/yihu/ehr/std
+commons-thrift-services/src/main/java/com/yihu/ehr/user

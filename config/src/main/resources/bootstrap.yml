@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: config
+
+
+---
+spring:
+  profiles: dev
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://192.168.1.220:10080/chenweida/ehr.config.git
+        default-label: dev
+
+---
+spring:
+  profiles: home
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://192.168.1.220:10080/chenweida/ehr.config.git
+        default-label: dev
+

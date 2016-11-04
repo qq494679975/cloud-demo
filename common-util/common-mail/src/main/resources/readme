@@ -1,0 +1,1 @@
+如果是用jdk8的话 用UnlimitedJCEPolicyJDK7.zip覆盖jdk1.8.0_65\jre\lib\security下的包

@@ -1,0 +1,57 @@
+server:
+  port: 1221
+
+management:
+  port: ${server.port}
+
+info:
+  app:
+    name: configService
+    description: 全局配置服务
+    version: 1.0.0
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    max-active: 20
+    max-idle: 8
+    min-idle: 8
+    validation-query: SELECT 1
+    test-on-borrow: true
+
+  session:
+    store-type: HASH_MAP
+
+---
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://172.19.103.77/wlyy?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: 123456
+
+
+eureka:
+  instance:
+    ip-address: 127.0.0.1:8761
+    prefer-ip-address: false
+
+---
+spring:
+  profiles: home
+
+  datasource:
+    url: jdbc:mysql://192.168.88.93/session?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: 123456
+
+eureka:
+  instance:
+    ip-address: 192.168.88.94:8761
+    prefer-ip-address: false
+
+
+
+
+

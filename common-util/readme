@@ -1,0 +1,13 @@
+常用的工具類
+common-async  多线程常用的封装的公用的一些工具类
+common-hadoop  hadoop常用的封装的公用的一些工具类
+common-hbase  hbase常用的封装的公用的一些工具类
+common-jdbc  jdbc常用的封装的公用的一些工具类
+common-mongodb  mongodb常用的封装的公用的一些工具类
+common-mq  mq的常用的封装的公用的一些工具类 （封装的activemq）
+common-quartz 线程调度常用的封装的公用的一些工具类（针对quartz）
+common-redis redis常用的封装的公用的一些工具类
+common-spark spark 常用的封装的公用的一些工具类
+common-swagger swagger常用的封装的公用的一些工具类
+common-log  log4j,logback常用的封装的公用的一些工具类
+common-mail 邮箱常用的封装的公用的一些工具类

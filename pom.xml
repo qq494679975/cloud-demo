@@ -291,9 +291,6 @@
                 <version>${version.commons-codec}</version>
                 <scope>${dependency.scope}</scope>
             </dependency>
-
-
-
             <dependency>
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>

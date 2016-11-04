@@ -1,6 +1,6 @@
 package com.yihu.cwd.jdbc.extract
 
-import com.yihu.cwd.jdbc.util.{SpringUtil}
+import com.yihu.cwd.commons.utils.SpringBeanUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Scope
@@ -52,7 +52,7 @@ import java.util
     */
   @throws(classOf[Exception])
   def extractByPage(clazz: Class[T], sql: String, countSql: String, pageSize: Int, isMultithreading: Boolean): util.List[T] = {
-    return SpringUtil.getBean(classOf[DBPageExtract[T]]).extractByPage(clazz, sql, countSql, pageSize, isMultithreading)
+    return SpringBeanUtil.getBean(classOf[DBPageExtract[T]]).extractByPage(clazz, sql, countSql, pageSize, isMultithreading)
   }
 
   /**
@@ -66,7 +66,7 @@ import java.util
   @throws(classOf[Exception])
   def extractByPage(clazz: Class[T], sql: String, countSql: String, isMultithreading: Boolean): util.List[T] = {
     val pageSize: Int = 10000
-    return SpringUtil.getBean(classOf[DBPageExtract[T]]).extractByPage(clazz, sql, countSql, pageSize, isMultithreading)
+    return SpringBeanUtil.getBean(classOf[DBPageExtract[T]]).extractByPage(clazz, sql, countSql, pageSize, isMultithreading)
   }
 
   /**
@@ -81,6 +81,6 @@ import java.util
     val pageSize: Int = 10000
     val isMultithreading: Boolean = false
     val countSql: String = ""
-    return SpringUtil.getBean(classOf[DBPageExtract[T]]).extractByPage(clazz, sql, countSql, pageSize, isMultithreading)
+    return SpringBeanUtil.getBean(classOf[DBPageExtract[T]]).extractByPage(clazz, sql, countSql, pageSize, isMultithreading)
   }
 }

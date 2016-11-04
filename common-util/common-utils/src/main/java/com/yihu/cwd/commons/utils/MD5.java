@@ -1,4 +1,4 @@
-package com.yihu.cwd.common.utils;
+package com.yihu.cwd.commons.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

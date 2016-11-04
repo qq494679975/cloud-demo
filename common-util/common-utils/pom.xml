@@ -8,6 +8,7 @@
         <version>1.1.0</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
+    <artifactId>common-utils</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <dependencies>
         <dependency>
@@ -21,7 +22,6 @@
             <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
-    <artifactId>common-utils</artifactId>
 
 
 </project>

@@ -13,7 +13,12 @@
     <artifactId>common-async</artifactId>
     <packaging>jar</packaging>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

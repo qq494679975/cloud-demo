@@ -1,4 +1,4 @@
-package com.yihu.cwd.common.utils;
+package com.yihu.cwd.commons.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

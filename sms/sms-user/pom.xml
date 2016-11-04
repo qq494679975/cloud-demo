@@ -11,6 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>sms-user</artifactId>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>com.yihu.cwd</groupId>
@@ -35,7 +36,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>${version.spring-boot}</version>
             <scope>${dependency.scope}</scope>
         </dependency>
     </dependencies>
@@ -73,7 +73,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
+                    <scalaVersion>${version.scala}</scalaVersion>
                 </configuration>
             </plugin>
         </plugins>

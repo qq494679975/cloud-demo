@@ -57,7 +57,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
+                    <scalaVersion>${version.scala}</scalaVersion>
                 </configuration>
             </plugin>
         </plugins>

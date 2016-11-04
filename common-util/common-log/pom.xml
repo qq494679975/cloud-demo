@@ -43,6 +43,26 @@
             <version>${version.log4j-over-slf4j}</version>
             <scope>${dependency.scope}</scope>
         </dependency>
+        <!--Log framework to SLF4J bridge: x-over-slf4j-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${version.jcl-over-slf4j}</version>
+            <scope>${dependency.scope}</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--SLF4J api-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${version.slf4j}</version>
+            <scope>${dependency.scope}</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -78,7 +98,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
+                    <scalaVersion>${version.scala}</scalaVersion>
                 </configuration>
             </plugin>
         </plugins>

@@ -52,6 +52,13 @@
             <organization>大大</organization>
             <organizationUrl>http://www.dada.com</organizationUrl>
         </developer>
+        <developer>
+            <id>laz</id>
+            <name>林阿忠1</name>
+            <email>957101506@qq.com</email>
+            <organization>大大</organization>
+            <organizationUrl>http://www.dada.com</organizationUrl>
+        </developer>
     </developers>
 
     <properties>

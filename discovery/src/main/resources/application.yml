@@ -40,7 +40,7 @@ eureka:
 info:
   app:
     name: DiscoveryService
-    description: EHR platform global discovery service
+    description: platform global discovery service
     version: 1.0.0
 
 

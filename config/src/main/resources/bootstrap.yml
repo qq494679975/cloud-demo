@@ -12,7 +12,8 @@ spring:
       server:
         git:
           uri: http://192.168.1.220:10080/chenweida/ehr.config.git
-        default-label: dev
+      profile: dev
+
 
 ---
 spring:
@@ -23,5 +24,5 @@ spring:
       server:
         git:
           uri: http://192.168.1.220:10080/chenweida/ehr.config.git
-        default-label: dev
+        default-label: home
 

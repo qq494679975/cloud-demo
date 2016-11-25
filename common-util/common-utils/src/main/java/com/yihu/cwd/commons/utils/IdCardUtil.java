@@ -115,7 +115,7 @@ public class IdCardUtil {
         Calendar cal = Calendar.getInstance();
         age = cal.get(Calendar.YEAR) - year;
         //周岁计算
-        if (cal.get(Calendar.MONTH) > (month - 1) || (cal.get(Calendar.MONTH) == (month - 1) && cal.get(Calendar.DATE) > day)) {
+        if (cal.get(Calendar.MONTH) < (month - 1) || (cal.get(Calendar.MONTH) == (month - 1) && cal.get(Calendar.DATE) > day)) {
             age--;
         }
         }catch (Exception e){

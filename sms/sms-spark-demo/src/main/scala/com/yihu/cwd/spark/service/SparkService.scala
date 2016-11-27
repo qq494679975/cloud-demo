@@ -21,11 +21,9 @@ class SparkService {
     //得到spark上下文
     var sc = sparkUtil.getSpackContent(jobName);
     //从hdfs得到文件
-    val textFile = sc.textFile("hdfs://192.168.131.240:9000/test/20160513.txt")
-    //计算文件单词数
-    var aa = textFile.filter(line => line.contains("spark")).count()
-    //输出单词数
-    println("文件单词总数 spark:%s ", aa)
+    val textFile = sc.textFile("hdfs://192.168.59.240:9000/user/hadoop/hadoop/test.log")
+    textFile.flatMap(_.split(" ")).map((_, 1)).reduceByKey(_+_).collect().foreach(println)
+    sc.stop()
   }
 
 }

@@ -38,8 +38,8 @@ class SwaggerConfig extends WebMvcConfigurerAdapter{
   }
 
   private def publicApiInfo: ApiInfo = {
-    var apiInfo: ApiInfo = new ApiInfo("三师平台统计分析API",
-      "统计分析接口。",
+    var apiInfo: ApiInfo = new ApiInfo("spring-cloud",
+      "spring-cloud。",
       "1.0",
       "No terms of service",
       new Contact("cwd","","494679975@qq.com"),

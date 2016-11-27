@@ -100,6 +100,7 @@
         <version.poi>3.12</version.poi>
         <version.scala>2.10.6</version.scala>
         <version.spark>1.6.0</version.spark>
+        <version.servlet>3.1.0</version.servlet>
         <dependency.scope>compile</dependency.scope>
     </properties>
     <!--dependencyManagement作用子配置不写版本默认继承父配置-->
@@ -322,6 +323,11 @@
                 <artifactId>scala-compiler</artifactId>
                 <version>${version.scala}</version>
                 <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${version.servlet}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

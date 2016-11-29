@@ -101,6 +101,7 @@
         <version.scala>2.10.6</version.scala>
         <version.spark>1.6.0</version.spark>
         <version.servlet>3.1.0</version.servlet>
+        <version.kafka>0.10.0.0</version.kafka>
         <dependency.scope>compile</dependency.scope>
     </properties>
     <!--dependencyManagement作用子配置不写版本默认继承父配置-->

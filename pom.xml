@@ -32,6 +32,7 @@
         <module>common-util/common-utils</module>
         <module>sms/sms-user</module>
         <module>sms/sms-spark-demo</module>
+        <module>sms/sms-test-log</module>
     </modules>
     <packaging>pom</packaging>
     <name>cwd-cloud</name>

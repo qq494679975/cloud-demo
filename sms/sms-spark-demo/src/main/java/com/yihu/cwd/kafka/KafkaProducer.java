@@ -18,7 +18,7 @@ public class KafkaProducer
     private KafkaProducer(){
         Properties props = new Properties();
         //此处配置的是kafka的端口
-        props.put("metadata.broker.list", "192.168.59.240:9092");
+        props.put("metadata.broker.list", "master:9092,slave1:9092,slave2:9092");
        // props.put("zookeeper.connect", "192.168.59.240:2181");
         //配置value的序列化类
         props.put("serializer.class", "kafka.serializer.StringEncoder");

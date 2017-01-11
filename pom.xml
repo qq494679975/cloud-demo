@@ -33,6 +33,8 @@
         <module>sms/sms-user</module>
         <module>sms/sms-spark-demo</module>
         <module>sms/sms-test-log</module>
+        <module>sms/sms-spark-streaming-kafka</module>
+        <module>auth2/auth2-demo</module>
     </modules>
     <packaging>pom</packaging>
     <name>cwd-cloud</name>
@@ -102,7 +104,7 @@
         <version.scala>2.10.6</version.scala>
         <version.spark>1.6.0</version.spark>
         <version.servlet>3.1.0</version.servlet>
-        <version.kafka>0.10.0.0</version.kafka>
+        <version.kafka>0.8.2.1</version.kafka>
         <dependency.scope>compile</dependency.scope>
     </properties>
     <!--dependencyManagement作用子配置不写版本默认继承父配置-->

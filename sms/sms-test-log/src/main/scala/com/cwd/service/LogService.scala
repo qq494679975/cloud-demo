@@ -13,7 +13,7 @@ class LogService {
   //private var logger: Logger = LoggerFactory.getLogger("test")
 
   def produceLog(): Unit = {
-    logger.info("hello world!")
+    logger.info("{input:{params:asd},output:{params:sss},status:1,logId:aasdasdasd,module:user}")
   }
 
 

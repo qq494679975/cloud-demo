@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * RemoteFlumeAgent的抽象封装
+ * FlumeAgent的抽象封装
  */
 public final class RemoteFlumeAgent {
 
@@ -39,13 +39,13 @@ public final class RemoteFlumeAgent {
                     int port = Integer.parseInt(portString);
                     return new RemoteFlumeAgent(parts[0], port);
                 } catch (NumberFormatException nfe) {
-                    logger.error("Not a valid int: " + portString);
+                    logger.error("端口参数不是数字: " + portString);
                 }
             } else {
-                logger.error("Not a valid [host]:[port] configuration: " + input);
+                logger.error("flume服务器参数格式有错: " + input);
             }
         } else {
-            logger.error("Empty flume agent entry, an extra comma?");
+            logger.error("flume服务器参数为空");
         }
         return null;
     }

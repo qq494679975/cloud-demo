@@ -72,7 +72,7 @@ public class HadoopUtil {
     public static void fileUpload() throws Exception {
         FileSystem fs = getFileSystem();
         // 列出hdfs上/user/fkong/目录下的所有文件和目录
-        FileStatus[] statuses = fs.listStatus(new Path("/user/hadoop/hadoop"));
+        FileStatus[] statuses = fs.listStatus(new Path("g:/12.jar"));
         for (FileStatus status : statuses) {
             System.out.println(status);
         }
@@ -98,7 +98,7 @@ public class HadoopUtil {
      */
     public static void fileUploadCopy(String path) throws Exception {
         FileSystem fs = getFileSystem();
-        fs.copyFromLocalFile(new Path(path), new Path("/test/20160513.txt"));
+        fs.copyFromLocalFile(new Path(path), new Path("/test/kafka.jar"));
         fs.close();
 
     }
@@ -209,11 +209,11 @@ public class HadoopUtil {
 
     public static void main(String[] args) throws Exception {
         // File a=new File("G:/tmp/logs/wly.log");
-        //a.createNewFile();
-        fileUpload();
+        // a.createNewFile();
+        //fileUpload();
         //downLoad("/user/Administrator/test/test.log");
-       // createDir("hadoop");
-        //fileUploadCopy("C:/Users/Administrator/Desktop/linux命令.txt");
+        // createDir("hadoop");
+        fileUploadCopy("g:/12.jar");
     }
 
 }

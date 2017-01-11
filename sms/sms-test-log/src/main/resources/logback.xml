@@ -27,6 +27,7 @@
 
 <configuration debug="true">
     <appender name="flume" class="com.cwd.logback.FlumeLogbackAppender">
+        <!--flume服务器 支持多个逗号分割-->
         <flumeAgents>
             192.168.116.242:44444
         </flumeAgents>
@@ -39,6 +40,7 @@
         <additionalAvroHeaders>myHeader=myValue</additionalAvroHeaders>
         <application>smapleapp</application>
         <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--{createDate:%d{yy-MM-dd:HH:mm:ss.SSS},logLevel:%-5level,class:%logger{36},logIndex:\(%file:%line\),message:%message%n%ex}-->
             <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - \(%file:%line\) - %message%n%ex</pattern>
         </layout>
     </appender>

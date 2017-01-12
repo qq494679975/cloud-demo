@@ -12,6 +12,7 @@ import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/1/11.
+ * 用户权限切面
  */
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
@@ -22,6 +23,5 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(javax.servlet.http.HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.info("Pre-authenticated entry point called. Rejecting access");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
-
     }
 }

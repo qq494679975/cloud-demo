@@ -1,8 +1,13 @@
 package com.cwd.auth2.config.auth2;
 
+import com.cwd.auth2.config.security.Authorities;
 import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,23 +24,20 @@ import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
  */
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+@Scope("singleton")
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter  {
 
     @Autowired
     private DataSource dataSource;
 
-    /**
-     * 设置token的数据库
-     * @return
-     */
     @Bean
     public TokenStore tokenStore() {
         return new JdbcTokenStore(dataSource);
     }
 
     @Bean
-    ClientDetailsService clientDetailsService() {
-        return new ClientDetailsService(dataSource);
+    EHRJdbcClientDetailsService clientDetailsService() {
+        return new EHRJdbcClientDetailsService(dataSource);
     }
 
     @Autowired

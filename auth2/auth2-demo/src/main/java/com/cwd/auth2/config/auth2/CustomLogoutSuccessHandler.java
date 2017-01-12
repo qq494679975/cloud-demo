@@ -14,6 +14,7 @@ import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/1/11.
+ * 退出成功之后的代理触发器
  */
 @Component
 public class CustomLogoutSuccessHandler

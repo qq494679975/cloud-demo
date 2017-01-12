@@ -15,6 +15,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 /**
  * Created by chenweida on 2016/2/3.
+ * swagger-ui的配置
  */
 @Configuration
 @EnableSwagger2
@@ -43,6 +44,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 .select()
                 .paths(or(
                         regex("/login/.*"),
+                        regex("/oauth/.*"),
                         regex("/user/.*")
                 ))
                 .build()

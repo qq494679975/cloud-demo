@@ -1,4 +1,4 @@
-package com.cwd.auth2.config.auth2;
+package com.cwd.auth2.config.auth2.resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;

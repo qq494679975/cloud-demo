@@ -1,25 +1,15 @@
 package com.cwd.auth2.service;
 
-import com.cwd.auth2.config.auth2.EHRJdbcClientDetailsService;
-import com.cwd.auth2.config.security.UserNotActivatedException;
+import com.cwd.auth2.config.auth2.authorization.EHRJdbcClientDetailsService;
 import com.cwd.auth2.dao.UserDao;
-import com.cwd.auth2.model.Authority;
-import com.cwd.auth2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.ClientDetails;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.NoSuchClientException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by Administrator on 2017/1/11.

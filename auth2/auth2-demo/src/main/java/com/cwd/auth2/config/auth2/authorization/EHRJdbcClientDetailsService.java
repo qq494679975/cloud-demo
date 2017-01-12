@@ -1,4 +1,4 @@
-package com.cwd.auth2.config.auth2;
+package com.cwd.auth2.config.auth2.authorization;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;

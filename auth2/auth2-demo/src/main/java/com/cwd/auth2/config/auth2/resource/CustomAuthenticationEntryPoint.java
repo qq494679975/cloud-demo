@@ -1,4 +1,4 @@
-package com.cwd.auth2.config.auth2;
+package com.cwd.auth2.config.auth2.resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

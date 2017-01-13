@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 /**
  * 2016/7/23
  *
- * @author Shengzhao Li
  */
 @Component
 public class EHRAuthorizationCodeServices extends JdbcAuthorizationCodeServices {
@@ -23,13 +22,11 @@ public class EHRAuthorizationCodeServices extends JdbcAuthorizationCodeServices 
 
 
     @Override
-    @Cacheable(value = "authorizationCodeCache", key = "#code")
     protected void store(String code, OAuth2Authentication authentication) {
         super.store(code, authentication);
     }
 
     @Override
-    @CacheEvict(value = "authorizationCodeCache", key = "#code")
     public OAuth2Authentication remove(String code) {
         return super.remove(code);
     }

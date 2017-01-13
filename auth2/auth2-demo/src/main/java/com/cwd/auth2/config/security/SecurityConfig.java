@@ -30,11 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
+                //swagger-ui界面---start
                 .antMatchers("/swagger-ui.html")
                 .antMatchers("/swagger-resources/**")
                 .antMatchers("/v2/api-docs/**")
                 .antMatchers("/configuration/**")
                 .antMatchers("/webjars/springfox-swagger-ui/**")
+                //swagger-ui界面---end
                 .antMatchers("/login/**")
                 .antMatchers("/login.do")
                 .antMatchers("/oauth/**");
@@ -59,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
 
     }
 
+    @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();

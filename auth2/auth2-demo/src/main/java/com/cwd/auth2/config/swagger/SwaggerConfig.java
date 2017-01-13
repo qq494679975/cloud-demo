@@ -43,6 +43,7 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 .pathMapping("/")
                 .select()
                 .paths(or(
+                        regex("/*/.*"),
                         regex("/login/.*"),
                         regex("/oauth/.*"),
                         regex("/user/.*")

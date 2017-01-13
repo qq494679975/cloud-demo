@@ -51,7 +51,6 @@ import java.util.Map;
  * 扩展默认的OAuth 功能,  提供 Restful API,
  * 可用于在获取access_token时调用
  *
- * @author Shengzhao Li
  * @see org.springframework.security.oauth2.provider.endpoint.TokenEndpoint
  */
 @Api(description = "获取access_token时调用")
@@ -76,7 +75,24 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
     private OAuth2RequestValidator oAuth2RequestValidator = new DefaultOAuth2RequestValidator();
     private WebResponseExceptionTranslator providerExceptionHandler = new DefaultWebResponseExceptionTranslator();
 
+    /**
+     * 请求必须是post
+     * 内容放在请求体(json格式)
+     * 可以传参数
+     * {
+     *     client_id:"客户端id",
+     *     grant_type:"请求模式-----------------------   authorization_code — 授权码模式(即先登录获取code,再获取token)
+                                                         password  密码模式(将用户名,密码传过去,直接获取token)
+                                                         client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
+                                                         implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)
+                                                         refresh_token — 刷新access_token
 
+     * }
+     *
+     *
+     * @param parameters
+     * @return
+     */
     @RequestMapping(value = "/rest_token", method = RequestMethod.POST)
     @ResponseBody
     public OAuth2AccessToken postAccessToken(@RequestBody Map<String, String> parameters) {
@@ -93,7 +109,7 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
             if (!clientId.equals(tokenRequest.getClientId())) {
                 // double check to make sure that the client ID in the token request is the same as that in the
                 // authenticated client
-                throw new InvalidClientException("Given client ID does not match authenticated client");
+                throw new InvalidClientException("client ID对应的客户端不存在");
             }
         }
 
@@ -103,7 +119,7 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
 
         final String grantType = tokenRequest.getGrantType();
         if (!StringUtils.hasText(grantType)) {
-            throw new InvalidRequestException("Missing grant type");
+            throw new InvalidRequestException("grant type为空");
         }
         if ("implicit".equals(grantType)) {
             throw new InvalidGrantException("Implicit grant type not supported from token endpoint");
@@ -112,7 +128,6 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
         if (isAuthCodeRequest(parameters)) {
             // The scope was requested or determined during the authorization step
             if (!tokenRequest.getScope().isEmpty()) {
-                LOG.debug("Clearing scope of incoming token request");
                 tokenRequest.setScope(Collections.<String>emptySet());
             }
         }
@@ -125,7 +140,7 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
 
         OAuth2AccessToken token = getTokenGranter(grantType).grant(grantType, tokenRequest);
         if (token == null) {
-            throw new UnsupportedGrantTypeException("Unsupported grant type: " + grantType);
+            throw new UnsupportedGrantTypeException("不支持的oauth类型: " + grantType);
         }
 
 
@@ -133,20 +148,33 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
 
     }
 
+    /**
+     *  authorization_code — 授权码模式(即先登录获取code,再获取token)
+        password  密码模式(将用户名,密码传过去,直接获取token)
+        client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
+        implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)
+        refresh_token — 刷新access_token
+     * @param grantType
+     * @return
+     */
     protected TokenGranter getTokenGranter(String grantType) {
-
         if ("authorization_code".equals(grantType)) {
+            //授权码模式
             return new AuthorizationCodeTokenGranter(tokenServices, authorizationCodeServices, clientDetailsService, this.oAuth2RequestFactory);
         } else if ("password".equals(grantType)) {
+            //密码模式
             return new ResourceOwnerPasswordTokenGranter(getAuthenticationManager(), tokenServices, clientDetailsService, this.oAuth2RequestFactory);
         } else if ("refresh_token".equals(grantType)) {
+            //刷新access_token
             return new RefreshTokenGranter(tokenServices, clientDetailsService, this.oAuth2RequestFactory);
         } else if ("client_credentials".equals(grantType)) {
+            //客户端模式
             return new ClientCredentialsTokenGranter(tokenServices, clientDetailsService, this.oAuth2RequestFactory);
         } else if ("implicit".equals(grantType)) {
+            //简化模式
             return new ImplicitTokenGranter(tokenServices, clientDetailsService, this.oAuth2RequestFactory);
         } else {
-            throw new UnsupportedGrantTypeException("Unsupport grant_type: " + grantType);
+            throw new UnsupportedGrantTypeException("不支持的类型grant_type: " + grantType);
         }
     }
 

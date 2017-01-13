@@ -16,21 +16,6 @@ import javax.sql.DataSource;
  */
 @Component
 public class EHRJdbcClientDetailsService extends JdbcClientDetailsService {
-    /**
-     * client Details Cache, key is clientId
-     */
-    public static final String CLIENT_DETAILS_CACHE = "clientDetailsCache";
-
-
-    /**
-     * authorization Code Cache, key is code
-     */
-    public static final String AUTHORIZATION_CODE_CACHE = "authorizationCodeCache";
-
-    /**
-     * user Cache, key is username
-     */
-    public static final String USER_CACHE = "userCache";
 
     private static final String SELECT_CLIENT_DETAILS_SQL = "select client_id, client_secret, resource_ids, scope, authorized_grant_types, " +
             "web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove " +

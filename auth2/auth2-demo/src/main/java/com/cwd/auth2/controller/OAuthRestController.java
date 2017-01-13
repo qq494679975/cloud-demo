@@ -67,28 +67,35 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
     private AuthorizationServerTokenServices tokenServices;
     @Autowired
     private EHRAuthorizationCodeServices authorizationCodeServices;
-
     private AuthenticationManager authenticationManager;
-
     private OAuth2RequestFactory oAuth2RequestFactory;
-
     private OAuth2RequestValidator oAuth2RequestValidator = new DefaultOAuth2RequestValidator();
     private WebResponseExceptionTranslator providerExceptionHandler = new DefaultWebResponseExceptionTranslator();
 
     /**
      * 请求必须是post
      * 内容放在请求体(json格式)
-     * 可以传参数
+     * authorization_code — 授权码模式(即先登录获取code,再获取token)
      * {
-     *     client_id:"客户端id",
-     *     grant_type:"请求模式-----------------------   authorization_code — 授权码模式(即先登录获取code,再获取token)
-                                                         password  密码模式(将用户名,密码传过去,直接获取token)
-                                                         client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
-                                                         implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)(暂不支持)
-                                                         refresh_token — 刷新access_token
-
+     * client_id:"mobile-client",
+     * grant_type:"authorization_code",
+     * code:""，
+     * username:"admin",
+     * password:"admin"
      * }
-     *
+     * <p>
+     * password  密码模式(将用户名,密码传过去,直接获取token)
+     * {
+     * client_id:"mobile-client",
+     * grant_type:"password",
+     * username:"admin",
+     * password:"admin"
+     * }
+     * client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
+     * refresh_token — 刷新access_token
+     * <p>
+     * <p>
+     * implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)(暂不支持)
      *
      * @param parameters
      * @return
@@ -143,11 +150,12 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
     }
 
     /**
-     *  authorization_code — 授权码模式(即先登录获取code,再获取token)
-        password  密码模式(将用户名,密码传过去,直接获取token)
-        client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
-        implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)
-        refresh_token — 刷新access_token
+     * authorization_code — 授权码模式(即先登录获取code,再获取token)
+     * password  密码模式(将用户名,密码传过去,直接获取token)
+     * client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
+     * implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)
+     * refresh_token — 刷新access_token
+     *
      * @param grantType
      * @return
      */
@@ -211,10 +219,8 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
 
     @Override
     public void afterPropertiesSet() throws Exception {
-
         Assert.state(clientDetailsService != null, "ClientDetailsService must be provided");
         Assert.state(authenticationManager != null, "AuthenticationManager must be provided");
-
         oAuth2RequestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
     }
 

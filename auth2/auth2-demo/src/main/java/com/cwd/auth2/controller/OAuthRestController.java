@@ -84,7 +84,7 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
      *     grant_type:"请求模式-----------------------   authorization_code — 授权码模式(即先登录获取code,再获取token)
                                                          password  密码模式(将用户名,密码传过去,直接获取token)
                                                          client_credentials — 客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向’服务端’获取资源)
-                                                         implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)
+                                                         implicit — 简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)(暂不支持)
                                                          refresh_token — 刷新access_token
 
      * }
@@ -99,16 +99,13 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
 
 
         String clientId = getClientId(parameters);
+        //通过clientId得到用户信息
         ClientDetails authenticatedClient = clientDetailsService.loadClientByClientId(clientId);
-
+        //创建token
         TokenRequest tokenRequest = oAuth2RequestFactory.createTokenRequest(parameters, authenticatedClient);
-
+        //判断clientId有没有对应的access_token
         if (clientId != null && !"".equals(clientId)) {
-            // Only validate the client details if a client authenticated during this
-            // request.
             if (!clientId.equals(tokenRequest.getClientId())) {
-                // double check to make sure that the client ID in the token request is the same as that in the
-                // authenticated client
                 throw new InvalidClientException("client ID对应的客户端不存在");
             }
         }
@@ -116,28 +113,25 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
         if (authenticatedClient != null) {
             oAuth2RequestValidator.validateScope(tokenRequest, authenticatedClient);
         }
-
+        //得到本次请求的oauth2的类型
         final String grantType = tokenRequest.getGrantType();
         if (!StringUtils.hasText(grantType)) {
             throw new InvalidRequestException("grant type为空");
         }
         if ("implicit".equals(grantType)) {
-            throw new InvalidGrantException("Implicit grant type not supported from token endpoint");
+            throw new InvalidGrantException("暂不支持implicit模式");
         }
-
+        //判断是否是authorization_code类型，如果是参数是否完整
         if (isAuthCodeRequest(parameters)) {
-            // The scope was requested or determined during the authorization step
             if (!tokenRequest.getScope().isEmpty()) {
                 tokenRequest.setScope(Collections.<String>emptySet());
             }
         }
-
-
+        //判断是否是refresh_token类型，如果是参数是否完整
         if (isRefreshTokenRequest(parameters)) {
-            // A refresh token has its own default scopes, so we should ignore any added by the factory here.
             tokenRequest.setScope(OAuth2Utils.parseParameterList(parameters.get(OAuth2Utils.SCOPE)));
         }
-
+        //根据oauth2类型获取access_token对象
         OAuth2AccessToken token = getTokenGranter(grantType).grant(grantType, tokenRequest);
         if (token == null) {
             throw new UnsupportedGrantTypeException("不支持的oauth类型: " + grantType);

@@ -10,16 +10,13 @@ package com.cwd.auth2.controller;/*
  * entered into with MONKEYK Information Technology Co. Ltd.
  */
 
-import com.cwd.auth2.config.auth2.EHRAuthorizationCodeServices;
+import com.cwd.auth2.service.EHRAuthorizationCodeServices;
 import com.cwd.auth2.config.auth2.authorization.EHRJdbcClientDetailsService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -36,10 +33,10 @@ import org.springframework.security.oauth2.provider.refresh.RefreshTokenGranter;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
 import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestValidator;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Map;
 
@@ -56,17 +53,22 @@ import java.util.Map;
 @Api(description = "获取access_token时调用")
 @RestController
 @RequestMapping(value = "/oauth")
-public class OAuthRestController implements InitializingBean, ApplicationContextAware {
+public class OAuthRestController implements InitializingBean {
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        oAuth2RequestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
+    }
 
     private static final Logger LOG = LoggerFactory.getLogger(OAuthRestController.class);
 
     @Autowired
     private EHRJdbcClientDetailsService clientDetailsService;
-    @Autowired
+    @Resource(name = "ehrTokenServices")
     private AuthorizationServerTokenServices tokenServices;
     @Autowired
     private EHRAuthorizationCodeServices authorizationCodeServices;
+    @Autowired
     private AuthenticationManager authenticationManager;
     private OAuth2RequestFactory oAuth2RequestFactory;
     private OAuth2RequestValidator oAuth2RequestValidator = new DefaultOAuth2RequestValidator();
@@ -165,7 +167,7 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
             return new AuthorizationCodeTokenGranter(tokenServices, authorizationCodeServices, clientDetailsService, this.oAuth2RequestFactory);
         } else if ("password".equals(grantType)) {
             //密码模式
-            return new ResourceOwnerPasswordTokenGranter(getAuthenticationManager(), tokenServices, clientDetailsService, this.oAuth2RequestFactory);
+            return new ResourceOwnerPasswordTokenGranter(authenticationManager, tokenServices, clientDetailsService, this.oAuth2RequestFactory);
         } else if ("refresh_token".equals(grantType)) {
             //刷新access_token
             return new RefreshTokenGranter(tokenServices, clientDetailsService, this.oAuth2RequestFactory);
@@ -213,26 +215,11 @@ public class OAuthRestController implements InitializingBean, ApplicationContext
         return parameters.get("client_id");
     }
 
-    private AuthenticationManager getAuthenticationManager() {
-        return this.authenticationManager;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Assert.state(clientDetailsService != null, "ClientDetailsService must be provided");
-        Assert.state(authenticationManager != null, "AuthenticationManager must be provided");
-        oAuth2RequestFactory = new DefaultOAuth2RequestFactory(clientDetailsService);
-    }
 
     protected WebResponseExceptionTranslator getExceptionTranslator() {
         return providerExceptionHandler;
     }
 
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (this.authenticationManager == null) {
-            this.authenticationManager = (AuthenticationManager) applicationContext.getBean(AuthenticationManager.class);
-        }
-    }
+
 }

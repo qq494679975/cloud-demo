@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
 /**
  * Created by Administrator on 2017/1/10.
@@ -20,6 +21,10 @@ import org.springframework.security.crypto.password.StandardPasswordEncoder;
 @EnableWebSecurity//@EnableWebMvcSecurity 注解开启Spring Security的功能
 public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSecurityConfigurerAdapter ，并重写它的方法来设置一些web安全的细节
 {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     /**
      * 不过滤的请求
      *
@@ -44,17 +49,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
 
     }
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new StandardPasswordEncoder();
+        PasswordEncoder passwordEncoder= NoOpPasswordEncoder.getInstance();
+        return passwordEncoder;
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());

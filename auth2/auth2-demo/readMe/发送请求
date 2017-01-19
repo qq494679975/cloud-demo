@@ -1,5 +1,24 @@
+PASSWORD 模式
 Headers
 Content-Type:application/json
-
+POST  http://localhost:8082/oauth/rest_token
 requestBody
-{"username":"admin",   "password":"admin",     "grant_type":"password",  "client_id":"mobile-client"}
+{   "username":"mobile",
+    "password":"mobile",
+    "grant_type":"password",
+    "client_id":"mobile-client",
+    "client_secret":"mobile",
+    "scope":"read"
+}
+refreshToken模式
+Headers
+Content-Type:application/json
+POST  http://localhost:8082/oauth/rest_token
+requestBody
+{
+    "grant_type":"refresh_token",
+    "client_id":"mobile-client",
+    "client_secret":"mobile",
+    "refresh_token":"dd32fdd1-9f43-4b00-bd26-ed0a0b53e253"
+ }
+

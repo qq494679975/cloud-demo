@@ -1,17 +1,18 @@
 package com.cwd.auth2.config.security;
 
+import com.cwd.auth2.config.auth2.authorization.EHRAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Created by Administrator on 2017/1/10.
@@ -24,6 +25,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
 
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private EHRAuthenticationEntryPoint ehrAuthenticationEntryPoint;
+
+    //==========密码加密方式====================
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        PasswordEncoder passwordEncoder = new Md5PasswordEncoder();
+        return passwordEncoder;
+    }
+
+    //===================权限管理器======================
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        AuthenticationManager authenticationManager = super.authenticationManagerBean();
+        return authenticationManager;
+    }
 
     /**
      * 不过滤的请求
@@ -49,23 +66,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
 
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        PasswordEncoder passwordEncoder= NoOpPasswordEncoder.getInstance();
-        return passwordEncoder;
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .userDetailsService(userDetailsService)
+                .anonymous().disable()
+                .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)
+        ;
+
     }
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                .userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        // .passwordEncoder(passwordEncoder());
 
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 }

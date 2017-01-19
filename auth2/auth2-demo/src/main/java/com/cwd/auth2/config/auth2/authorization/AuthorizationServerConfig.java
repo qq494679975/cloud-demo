@@ -1,5 +1,6 @@
 package com.cwd.auth2.config.auth2.authorization;
 
+import com.cwd.auth2.service.EHRAuthorizationCodeServices;
 import com.cwd.auth2.service.UserService;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Primary;
@@ -7,26 +8,16 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.vote.AuthenticatedVoter;
-import org.springframework.security.access.vote.RoleVoter;
-import org.springframework.security.access.vote.UnanimousBased;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService;
-import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-import org.springframework.security.oauth2.provider.vote.ScopeVoter;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by Administrator on 2017/1/11.
@@ -34,6 +25,7 @@ import java.util.List;
  */
 @Configuration
 @EnableAuthorizationServer
+@EnableTransactionManagement//以防止在创建令牌时竞争相同行的客户端应用程序之间发生冲突
 @Scope("singleton")
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
@@ -42,20 +34,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private EHRJdbcClientDetailsService jdbcClientDetailsService;
     @Autowired
+    private EHRAuthorizationCodeServices ehrAuthorizationCodeServices;
+    @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private UserService userService;
 
-    @Override
-    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-            throws Exception {
-        endpoints
-                .userDetailsService(userService)
-                .tokenStore(getJdbeTokenStore())
-                .authenticationManager(authenticationManager);
-
-    }
-
+    /**
+     * 定义客户端详细信息服务的configurer。 客户端详细信息可以初始化，也可以只引用现有存储。
+     *
+     * @param clients
+     * @throws Exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.
@@ -63,13 +53,37 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     }
 
+    /**
+     * 定义令牌端点上的安全约束
+     *
+     * @param oauthServer
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer.allowFormAuthenticationForClients();
+        oauthServer.
+                allowFormAuthenticationForClients();
+    }
+
+    /**
+     * 定义授权和令牌端点以及令牌服务
+     *
+     * @param endpoints
+     * @throws Exception
+     */
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints)
+            throws Exception {
+        endpoints
+                .userDetailsService(userService)//如果你注入一个UserDetailsService或者如果一个是全局配置的（例如在一个GlobalAuthenticationManagerConfigurer ），刷新令牌授权将包含对用户详细信息的检查，以确保帐户仍然活动
+                .authorizationCodeServices(ehrAuthorizationCodeServices)//定义授权代码授权的授权代码服务
+                .tokenStore(getJdbeTokenStore())//使用数据库证书
+                .authenticationManager(authenticationManager);//注入AuthenticationManager打开密码授权。
+
     }
 
     //=========================配置数据库证书=========================
-    @Bean
+    @Bean(name = "ehrJdbeTokenStore")
     public JdbcTokenStore getJdbeTokenStore() {
         JdbcTokenStore jdbcTokenStore = new JdbcTokenStore(dataSource);
 
@@ -85,7 +99,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         defaultTokenServices.setTokenStore(getJdbeTokenStore());
         return defaultTokenServices;
     }
-
     /**
      * 扩展Spring Security 默认的 AccessDecisionManager
      * 添加对OAuth中 scope 的检查与校验

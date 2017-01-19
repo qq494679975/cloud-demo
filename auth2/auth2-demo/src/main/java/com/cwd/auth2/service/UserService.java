@@ -1,6 +1,8 @@
 package com.cwd.auth2.service;
 
 import com.cwd.auth2.config.auth2.authorization.EHRJdbcClientDetailsService;
+import com.cwd.auth2.dao.UserDao;
+import com.cwd.auth2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +18,14 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
     @Autowired
     private EHRJdbcClientDetailsService clientDetailsService;
+    @Autowired
+    private UserDao userDao;
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ClientDetails clientDetails;
         try {
-            clientDetails = clientDetailsService.loadClientByClientId(username);
+            User user = userDao.findByUsername(username);
+            clientDetails = clientDetailsService.loadClientByClientId(user.getClientId());
         } catch (NoSuchClientException e) {
             throw new UsernameNotFoundException(e.getMessage(), e);
         }

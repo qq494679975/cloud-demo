@@ -12,6 +12,6 @@ public interface UserDao extends PagingAndSortingRepository<User, String>, JpaSp
 
     User findByEmail(String lowercaseLogin);
 
-    @Query("SELECT u FROM User u WHERE LOWER(u.username) = LOWER(:username)")
-    User findByUsernameCaseInsensitive(String lowercaseLogin);
+    @Query("SELECT u FROM User u WHERE u.username=?1 ")
+    User findByUsername(String lowercaseLogin);
 }

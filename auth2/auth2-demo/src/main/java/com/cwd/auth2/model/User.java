@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
+@Table(name = "user_")
 public class User implements UserDetails {
 
     private static final long serialVersionUID = 6389595583933916694L;
@@ -28,13 +29,17 @@ public class User implements UserDetails {
 
     private boolean activated;
 
-    @Size(min = 0, max = 100)
-    @Column(name = "activationkey")
-    private String activationKey;
+    private String clientId;
 
-    @Size(min = 0, max = 100)
-    @Column(name = "resetpasswordkey")
-    private String resetPasswordKey;
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+
 
     @ManyToMany
     @JoinTable(
@@ -104,21 +109,6 @@ public class User implements UserDetails {
         this.activated = activated;
     }
 
-    public String getActivationKey() {
-        return activationKey;
-    }
-
-    public void setActivationKey(String activationKey) {
-        this.activationKey = activationKey;
-    }
-
-    public String getResetPasswordKey() {
-        return resetPasswordKey;
-    }
-
-    public void setResetPasswordKey(String resetPasswordKey) {
-        this.resetPasswordKey = resetPasswordKey;
-    }
 
 
     public void setAuthorities(Set<Authority> authorities) {
@@ -149,8 +139,6 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", activated='" + activated + '\'' +
-                ", activationKey='" + activationKey + '\'' +
-                ", resetPasswordKey='" + resetPasswordKey + '\'' +
                 ", authorities=" + authorities +
                 '}';
     }

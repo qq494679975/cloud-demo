@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 /**
  * Created by Administrator on 2017/1/10.
@@ -43,38 +44,42 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
         return authenticationManager;
     }
 
-//    /**
-//     * 不过滤的请求
-//     *
-//     * @param web
-//     * @throws Exception
-//     */
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web
-//                .ignoring()
-//                //swagger-ui界面---start
-//                .antMatchers("/swagger-ui.html")
-//                .antMatchers("/swagger-resources/**")
-//                .antMatchers("/v2/api-docs/**")
-//                .antMatchers("/configuration/**")
-//                .antMatchers("/webjars/springfox-swagger-ui/**")
-//                //swagger-ui界面---end
-//                .antMatchers("/oauth/**")
-//                .antMatchers(
-//                        "/login.ftl",
-//                        "/formLogin",
-//                        "/logout",
-//                        "/resources/**",
-//                        "/jsp/**");
-//
-//
-//    }
+    /**
+     * 不过滤的请求
+     *
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                //swagger-ui界面---start
+                .antMatchers("/swagger-ui.html")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/v2/api-docs/**")
+                .antMatchers("/configuration/**")
+                .antMatchers("/webjars/springfox-swagger-ui/**")
+                //swagger-ui界面---end
+                .antMatchers("/oauth/**")
+                .antMatchers(
+                        "/login.ftl",
+                        "/formLogin",
+                        "/logout",
+                        "/resources/**",
+                        "/page/**",
+                        "/jsp/**");
+
+
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         System.out.println("SecurityConfig");
         http
                 .csrf().disable()
+                .headers()
+                .addHeaderWriter(new StaticHeadersWriter("X-Content-Type-Options","nosniff")) .and()
                 .userDetailsService(userDetailsService)
                 .anonymous().disable()
                 .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)

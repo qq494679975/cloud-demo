@@ -28,13 +28,13 @@ spring:
 
   freemarker:
     enabled: true
-    check-template-location: true
+    cache: true
+    check-template-location: false
     allow-request-override: false
-    template-loader-path: /templates/
+    template-loader-path: classpath:/templates/
     request-context-attribute: pageContext
-    prefix: classpath:/templates/
-    content-type: text/html
-
+    prefix: /templates/
+#    content-type: text/html
 
   resources:
     static-locations: classpath:/static/

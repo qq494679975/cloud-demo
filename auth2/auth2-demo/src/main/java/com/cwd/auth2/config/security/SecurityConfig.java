@@ -78,8 +78,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
         System.out.println("SecurityConfig");
         http
                 .csrf().disable()
-                .headers()
-                .addHeaderWriter(new StaticHeadersWriter("X-Content-Type-Options","nosniff")) .and()
                 .userDetailsService(userDetailsService)
                 .anonymous().disable()
                 .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)

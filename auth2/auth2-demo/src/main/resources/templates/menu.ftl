@@ -52,6 +52,17 @@
         </tr>
         <tr>
             <td>客户端模式</td>
+            <td>client_id:<input id="client_credentials_model_client_id"/></td>
+            <td>client_secret:<input id="client_credentials_model_client_secret"/></td>
+            <td>scope:<input id="client_credentials_model_scope"/></td>
+            <td>
+                <div id="client_credentials_model">获取accecc_token</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <div id="client_credentials_model_return"></div>
+            </td>
         </tr>
         <tr>
             <td>刷新access_token</td>
@@ -77,12 +88,10 @@
         //获取code
         $("#authorizationCode_model").click(function () {
             $.ajax({
-                url: '/oauth/rest_token',
+                url: '/formLogin',
                 type: 'POST', //GET
                 async: true,    //或false,是否异步
                 data: JSON.stringify({
-                    "client_id":  $("#password_model_client_id").val(),//"mobile-client"
-                    "grant_type": "password",
                     "username": $("#password_model_username").val(),//admin
                     "password": $("#password_model_password").val() //admin
                 }),
@@ -90,7 +99,7 @@
                     'Content-Type' : 'application/json;charset=utf-8'
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $("#password_model_return").text(JSON.stringify(data));
+                    $("#authorizationCode_model").text(JSON.stringify(data));
                 }
             })
         })
@@ -113,6 +122,26 @@
                 },
                 success: function (data, textStatus, jqXHR) {
                     $("#password_model_return").text(JSON.stringify(data));
+                }
+            })
+        })
+        //客户端模式
+        $("#client_credentials_model").click(function () {
+            $.ajax({
+                url: '/oauth/rest_token',
+                type: 'POST', //GET
+                async: true,    //或false,是否异步
+                data: JSON.stringify({
+                    "client_id":  $("#client_credentials_model_client_id").val(),//"mobile-client"
+                    "grant_type": "client_credentials",
+                    "client_secret": $("#client_credentials_model_client_secret").val(),//admin
+                    "scope": $("#client_credentials_model_scope").val() // 	read or write
+                }),
+                headers : {
+                    'Content-Type' : 'application/json;charset=utf-8'
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $("#client_credentials_model_return").text(JSON.stringify(data));
                 }
             })
         })

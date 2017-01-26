@@ -46,9 +46,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.
                  csrf().disable()
-                .headers()
-                .addHeaderWriter(new StaticHeadersWriter("X-Content-Type-Options","nosniff"))
-                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()

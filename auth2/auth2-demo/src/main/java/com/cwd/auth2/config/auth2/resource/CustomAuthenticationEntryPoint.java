@@ -12,7 +12,10 @@ import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/1/11.
- * 用于授权服务请求的。默认的URL是：/oauth/authrize。
+ * 用户访问资源时，发生
+ * 授权异常（AuthenticationException）
+ * 认证异常（AccessDeniedException），
+ * ExceptionTranslationFilter通过调用AuthenticationEntryPoint的commence方法发起认证过程
  */
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {

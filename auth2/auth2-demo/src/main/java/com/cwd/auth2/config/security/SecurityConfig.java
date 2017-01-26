@@ -1,6 +1,7 @@
 package com.cwd.auth2.config.security;
 
 import com.cwd.auth2.config.auth2.authorization.EHRAuthenticationEntryPoint;
+import com.cwd.auth2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
 {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserService userDetailsService;
     @Autowired
     private EHRAuthenticationEntryPoint ehrAuthenticationEntryPoint;
 
@@ -42,37 +43,68 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
         return authenticationManager;
     }
 
-    /**
-     * 不过滤的请求
-     *
-     * @param web
-     * @throws Exception
-     */
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                //swagger-ui界面---start
-                .antMatchers("/swagger-ui.html")
-                .antMatchers("/swagger-resources/**")
-                .antMatchers("/v2/api-docs/**")
-                .antMatchers("/configuration/**")
-                .antMatchers("/webjars/springfox-swagger-ui/**")
-                //swagger-ui界面---end
-                .antMatchers("/login/**")
-                .antMatchers("/login.do")
-                .antMatchers("/oauth/**");
-
-
-    }
-
+//    /**
+//     * 不过滤的请求
+//     *
+//     * @param web
+//     * @throws Exception
+//     */
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web
+//                .ignoring()
+//                //swagger-ui界面---start
+//                .antMatchers("/swagger-ui.html")
+//                .antMatchers("/swagger-resources/**")
+//                .antMatchers("/v2/api-docs/**")
+//                .antMatchers("/configuration/**")
+//                .antMatchers("/webjars/springfox-swagger-ui/**")
+//                //swagger-ui界面---end
+//                .antMatchers("/oauth/**")
+//                .antMatchers(
+//                        "/login.ftl",
+//                        "/formLogin",
+//                        "/logout",
+//                        "/resources/**",
+//                        "/jsp/**");
+//
+//
+//    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        System.out.println("SecurityConfig");
         http
                 .csrf().disable()
                 .userDetailsService(userDetailsService)
                 .anonymous().disable()
                 .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)
+                .and()
+                .formLogin()
+                .loginPage("/page/loginPage")
+                .loginProcessingUrl("/formLogin")  //默认  j_spring_security_check
+                .passwordParameter("password")
+                .usernameParameter("username")
+                .successForwardUrl("/page/indexPage")
+                .failureForwardUrl("/page/errorPage")
+                .permitAll()
+                .and()
+                .logout().logoutUrl("/logout").clearAuthentication(true)
+                .and()
+                .authorizeRequests()
+                .antMatchers(
+                        "/api/v1.0/tokens",
+                        "/page/**",
+                        "/formLogin",
+                        "/logout",
+                        "/templates/**",
+                        "/resources/**",
+                        "/js/**",
+                        "/img/**",
+                        "/static/**",
+                        "/javascript/**",
+                        "/jsp/**")
+                .permitAll()
+
         ;
 
     }

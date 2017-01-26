@@ -2,6 +2,7 @@ server:
     port: 8082
 
 
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -24,3 +25,17 @@ spring:
     url: jdbc:mysql://127.0.0.1/oauth?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     username: root
     password: 123456
+
+  freemarker:
+    enabled: true
+    check-template-location: true
+    allow-request-override: false
+    template-loader-path: /templates/
+    request-context-attribute: pageContext
+    prefix: classpath:/templates/
+    content-type: text/html
+
+
+  resources:
+    static-locations: classpath:/static/
+

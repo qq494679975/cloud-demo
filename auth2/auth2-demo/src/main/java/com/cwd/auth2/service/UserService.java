@@ -23,13 +23,16 @@ public class UserService implements UserDetailsService {
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ClientDetails clientDetails;
+        User user;
         try {
-            User user = userDao.findByUsername(username);
+            user = userDao.findByUsername(username);
             clientDetails = clientDetailsService.loadClientByClientId(user.getClientId());
         } catch (NoSuchClientException e) {
             throw new UsernameNotFoundException(e.getMessage(), e);
         }
-        String clientSecret = clientDetails.getClientSecret();
-        return new org.springframework.security.core.userdetails.User(username, clientSecret, clientDetails.getAuthorities());
+        //String clientSecret = clientDetails.getClientSecret();
+        //return new org.springframework.security.core.userdetails.User(username, clientSecret, clientDetails.getAuthorities());
+
+        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), clientDetails.getAuthorities());
     }
 }

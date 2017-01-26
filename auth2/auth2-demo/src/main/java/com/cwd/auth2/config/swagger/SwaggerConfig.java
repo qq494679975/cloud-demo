@@ -3,8 +3,10 @@ package com.cwd.auth2.config.swagger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.request.async.DeferredResult;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -19,11 +21,21 @@ import static springfox.documentation.builders.PathSelectors.regex;
  */
 @Configuration
 @EnableSwagger2
+@EnableWebMvc
 public class SwaggerConfig extends WebMvcConfigurerAdapter {
     private static final String Doctor_API = "Doctor_API";
     private static final String Patient_API = "Patient_API";
     private static final String Common_API = "Common_API";
-
+    @Configuration
+    public class MvcConfig extends WebMvcConfigurerAdapter {
+        @Bean
+        public FreeMarkerViewResolver freeMarkerViewResolver() {
+            FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+            resolver.setContentType("text/html; charset=UTF-8");
+            resolver.setRequestContextAttribute("rc");
+            return resolver;
+        }
+    }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
@@ -44,7 +56,6 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
                 .select()
                 .paths(or(
                         regex("/*/.*"),
-                        regex("/login/.*"),
                         regex("/oauth/.*"),
                         regex("/user/.*")
                 ))
@@ -108,8 +119,8 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
 //        return apiInfo;
 //    }
     private ApiInfo commonApiInfo() {
-        ApiInfo apiInfo = new ApiInfo("杨大夫 rest API",
-                "杨大夫公共",
+        ApiInfo apiInfo = new ApiInfo("oauth2 rest API",
+                "oauth2 公共",
                 "1.0",
                 "No terms of service",
                 "admin@jkzl.com",

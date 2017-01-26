@@ -1,7 +1,10 @@
 PASSWORD 模式
+请求头
 Headers
 Content-Type:application/json
+请求方式和路径
 POST  http://localhost:8082/oauth/rest_token
+请求体
 requestBody
 {   "username":"mobile",
     "password":"mobile",
@@ -10,10 +13,14 @@ requestBody
     "client_secret":"mobile",
     "scope":"read"
 }
+
 refreshToken模式
+请求头
 Headers
 Content-Type:application/json
+请求方式和路径
 POST  http://localhost:8082/oauth/rest_token
+请求体
 requestBody
 {
     "grant_type":"refresh_token",
@@ -22,3 +29,20 @@ requestBody
     "refresh_token":"dd32fdd1-9f43-4b00-bd26-ed0a0b53e253"
  }
 
+authorizationCode模式
+//需要先登陆获取code   (类 AuthorizationEndpoint)
+
+请求头
+Headers
+Content-Type:application/json
+请求方式和路径
+POST  http://localhost:8082/oauth/rest_token
+请求体
+requestBody
+{
+"grant_type":"authorization_code",
+"client_id":"mobile-client",
+"client_secret":"mobile",
+"code":"dd32fdd19f434b00bd26ed0a0b53e253", ->code
+"redirect_uri":"www.baidu.com"   ->授权成功之后跳转的页面
+}

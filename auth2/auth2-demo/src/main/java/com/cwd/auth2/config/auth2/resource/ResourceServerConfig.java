@@ -20,9 +20,9 @@ import javax.annotation.Resource;
  * Created by Administrator on 2017/1/11.
  * 资源服务器
  */
-@Configuration
-@EnableResourceServer
-@Scope("singleton")
+//@Configuration
+//@EnableResourceServer
+//@Scope("singleton")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -43,10 +43,17 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
         http
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .and()
+                .formLogin()
+                .loginPage("/page/loginPage")
+                .loginProcessingUrl("/formLogin")
+                .passwordParameter("password")
+                .usernameParameter("username")
+                .successForwardUrl("/page/indexPage")
+                .failureForwardUrl("/page/errorPage")
                 .and()
                 .logout()
                 .logoutUrl("/oauth/logout")
@@ -62,7 +69,19 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1.0/tokens").permitAll()
+                .antMatchers(
+                        "/api/v1.0/tokens",
+                        "/formLogin",
+                        "/page/**",
+                        "/logout",
+                        "/templates/**",
+                        "/resources/**",
+                        "/js/**",
+                        "/img/**",
+                        "/static/**",
+                        "/webapp/**",
+                        "/javascript/**",
+                        "/jsp/**").permitAll()
                 .antMatchers("/**").authenticated();
 
     }

@@ -13,8 +13,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/1/10.
@@ -64,9 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                 .antMatchers("/oauth/**")
                 .antMatchers(
                         "/login.ftl",
-                        "/formLogin",
                         "/logout",
                         "/resources/**",
+                        "/oauth/**",
                         "/page/**",
                         "/jsp/**");
 
@@ -83,21 +90,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                 .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)
                 .and()
                 .formLogin()
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+                        System.out.println("授权失败");
+                        request.getRequestDispatcher("/page/loginPage?error").forward(request,response);
+                    }
+                })
                 .loginPage("/page/loginPage")
+                .failureUrl("/page/loginPage?error")
                 .loginProcessingUrl("/formLogin")  //默认  j_spring_security_check
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .successForwardUrl("/page/indexPage")
-                .failureForwardUrl("/page/errorPage")
+                .failureForwardUrl("/page/loginPage")
                 .permitAll()
                 .and()
                 .logout().logoutUrl("/logout").clearAuthentication(true)
                 .and()
                 .authorizeRequests()
+                .anyRequest()
+                .fullyAuthenticated()
                 .antMatchers(
                         "/api/v1.0/tokens",
                         "/page/**",
-                        "/formLogin",
+                        "/oauth/**",
                         "/logout",
                         "/templates/**",
                         "/resources/**",

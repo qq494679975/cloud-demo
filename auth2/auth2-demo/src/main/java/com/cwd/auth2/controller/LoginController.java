@@ -15,7 +15,6 @@ public class LoginController {
     @RequestMapping(value = "/loginPage", method = RequestMethod.GET)
     public String loginPage() {
         System.out.println("跳入登陆页面");
-
         return "/login.ftl";
     }
 

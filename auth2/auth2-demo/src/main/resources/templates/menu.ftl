@@ -20,9 +20,10 @@
         <tr>
             <td>授权码模式</td>
         </tr>
+
         <tr>
-            <td>账号:<input id="authorizationCode_model_username" /></td>
-            <td>密码:<input id="authorizationCode_model_password" /></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp; 先获取code</td>
+            <td>client_id:<input id="authorizationCode_model_client_id" value="mobile-client" /></td>
             <td>
                 <div id="authorizationCode_model">获取code</div>
             </td>
@@ -86,15 +87,19 @@
     $(function () {
         //授权码模式
         //获取code
+        ///oauth/authorize?client_id=mobile-client&redirect_uri=http://localhost:8080/spring-oauth-server/unity/dashboard&response_type=code&scope=read write&state=your_state
         $("#authorizationCode_model").click(function () {
             $.ajax({
-                url: '/formLogin',
-                type: 'POST', //GET
+                url: '/oauth/authorize',
+                type: 'GET', //GET
                 async: true,    //或false,是否异步
-                data: JSON.stringify({
-                    "username": $("#password_model_username").val(),//admin
-                    "password": $("#password_model_password").val() //admin
-                }),
+                data:{
+                    "client_id":$("#authorizationCode_model_client_id").val(),// 'mobile-client' admin
+                    "redirect_uri":"http://localhost:8082/page/menuPage",
+                    "response_type":"code",
+                    "scope":"read write",
+                    "state":"you_status"
+                },
                 headers : {
                     'Content-Type' : 'application/json;charset=utf-8'
                 },

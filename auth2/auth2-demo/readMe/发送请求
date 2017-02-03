@@ -1,3 +1,13 @@
+5种模式的demo路径
+ip:port/项目名/page/menuPage
+例如:
+http://localhost:8082/page/menuPage
+
+登陆页
+http://localhost:8082/page/loginPage
+
+
+
 PASSWORD 模式
 请求头
 Headers

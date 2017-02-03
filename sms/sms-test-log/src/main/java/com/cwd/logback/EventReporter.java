@@ -17,6 +17,7 @@ import java.util.concurrent.*;
  */
 public class EventReporter {
 
+
     private RpcClient client;
 
     private final ContextAware loggingContext;

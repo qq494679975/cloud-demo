@@ -2,6 +2,8 @@ package com.cwd.logback;
 
 import ch.qos.logback.core.spi.ContextAware;
 import org.apache.flume.Event;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Properties;
@@ -16,6 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class FlumeAvroManager {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final AtomicLong threadSequence = new AtomicLong(1);
 
     private static final int MAX_RECONNECTS = 3;
@@ -96,10 +99,10 @@ public class FlumeAvroManager {
 
     public void send(Event event) {
         if (event != null) {
-            loggingContext.addWarn("发送新的日志 " + event.toString());
+            logger.debug("发送新的日志 " + event.toString());
             evQueue.add(event);
         } else {
-            loggingContext.addWarn("日志为空");
+            logger.debug("日志为空");
         }
     }
 
@@ -137,6 +140,7 @@ public class FlumeAvroManager {
      */
     private class AsyncThread extends Thread {
 
+        private final Logger logger = LoggerFactory.getLogger(getClass());
         private final BlockingQueue<Event> queue;
         private final long reportingWindow;
         private final int batchSize;
@@ -178,11 +182,11 @@ public class FlumeAvroManager {
                         batch = new Event[count];
                         System.arraycopy(events, 0, batch, 0, count);
                     }
-                    loggingContext.addInfo("发送  " + count + " 条日志");
+                    logger.debug("发送  " + count + " 条日志");
                     try {
                         reporter.report(batch);
                     } catch (RejectedExecutionException ex) {
-                        loggingContext.addError("日志发送失败", ex);
+                        logger.error("日志发送失败", ex);
                     }
                 }
             }

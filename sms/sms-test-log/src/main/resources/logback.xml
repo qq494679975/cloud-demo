@@ -29,7 +29,7 @@
     <appender name="flume" class="com.cwd.logback.FlumeLogbackAppender">
         <!--flume服务器 支持多个逗号分割-->
         <flumeAgents>
-            192.168.116.242:44444
+            localhost:44444
         </flumeAgents>
         <flumeProperties>
             connect-timeout=4000;
@@ -47,7 +47,7 @@
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
+            <level>INFO</level>
         </filter>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - \(%file:%line\) - %message%n%ex</pattern>

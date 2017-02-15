@@ -21,9 +21,9 @@ import javax.annotation.Resource;
  * Created by Administrator on 2017/1/11.
  * 资源服务器
  */
-//@Configuration
-//@EnableResourceServer
-//@Scope("singleton")
+@Configuration
+@EnableResourceServer
+@Scope("singleton")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -42,53 +42,53 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 tokenStore(jdbcTokenStore);
     }
 
-//    @Override
-//    public void configure(HttpSecurity http) throws Exception {
-//        http.
-//                 csrf().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(customAuthenticationEntryPoint)
-//                .and()
-//                .formLogin()
-//                .loginPage("/page/loginPage")
-//                .failureUrl("/page/loginPage?error")
-//                .loginProcessingUrl("/formLogin")
-//                .passwordParameter("password")
-//                .usernameParameter("username")
-//                .successForwardUrl("/page/indexPage")
-//                .failureForwardUrl("/page/errorPage")
-//                .and()
-//                .logout()
-//                .logoutUrl("/oauth/logout")
-//                .logoutSuccessHandler(customLogoutSuccessHandler)
-//                .and()
-//                .csrf()
-//                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
-//                .disable()
-//                .headers()
-//                .frameOptions().disable()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest()
-//                .fullyAuthenticated()
-//                .antMatchers(
-//                        "/api/v1.0/tokens",
-//                        "/page/**",
-//                        "/logout",
-//                        "/templates/**",
-//                        "/resources/**",
-//                        "/oauth/**",
-//                        "/js/**",
-//                        "/img/**",
-//                        "/static/**",
-//                        "/webapp/**",
-//                        "/javascript/**",
-//                        "/jsp/**").permitAll()
-//                .antMatchers("/**").authenticated();
-//
-//    }
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.
+                 csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .and()
+                .formLogin()
+                .loginPage("/page/loginPage")
+                .failureUrl("/page/loginPage?error")
+                .loginProcessingUrl("/formLogin")
+                .passwordParameter("password")
+                .usernameParameter("username")
+                .successForwardUrl("/page/indexPage")
+                .failureForwardUrl("/page/errorPage")
+                .and()
+                .logout()
+                .logoutUrl("/oauth/logout")
+                .logoutSuccessHandler(customLogoutSuccessHandler)
+                .and()
+                .csrf()
+                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
+                .disable()
+                .headers()
+                .frameOptions().disable()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .fullyAuthenticated()
+                .antMatchers(
+                        "/api/v1.0/tokens",
+                        "/page/**",
+                        "/logout",
+                        "/templates/**",
+                        "/resources/**",
+                        "/oauth/**",
+                        "/js/**",
+                        "/img/**",
+                        "/static/**",
+                        "/webapp/**",
+                        "/javascript/**",
+                        "/jsp/**").permitAll()
+                .antMatchers("/**").authenticated();
+
+    }
 
 }

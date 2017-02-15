@@ -25,7 +25,11 @@
             <td>&nbsp;&nbsp;&nbsp;&nbsp; 先获取code</td>
             <td>client_id:<input id="authorizationCode_model_client_id" value="mobile-client" /></td>
             <td>
-                <div id="authorizationCode_model">获取code</div>
+                <!--
+                    /oauth/authorize?client_id={{clientId}}&redirect_uri={{redirectUri}}&response_type=code&scope={{scope}}&state=your_state-->
+                 <a href="javascript:void(0)"  onclick="subgo()">
+                     获取code
+                 </a>
             </td>
         </tr>
         <tr>
@@ -85,6 +89,16 @@
 </div>
 
 <script type="text/javascript">
+    function subgo(){
+        var url="/oauth/authorize?client_id="+$("#authorizationCode_model_client_id").val()+"&redirect_uri=http://localhost:8082/page/menuPage&response_type=code&scope=read&state=your_state";
+        var el = document.createElement("a");
+        document.body.appendChild(el);
+        el.href = url; //url 是你得到的连接
+        el.target = '_new'; //指定在新窗口打开
+        el.click();
+        document.body.removeChild(el);
+    }
+
     $(function () {
         //授权码模式
         //获取code

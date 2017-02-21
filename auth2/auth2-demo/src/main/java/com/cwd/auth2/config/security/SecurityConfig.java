@@ -70,12 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                 .antMatchers("/configuration/**")
                 .antMatchers("/webjars/springfox-swagger-ui/**")
                 //swagger-ui界面---end
-                .antMatchers("/oauth/**")
                 .antMatchers(
                         "/login.ftl",
                         "/logout",
                         "/resources/**",
-                        "/oauth/**",
                         "/page/**",
                         "/jsp/**");
 
@@ -84,7 +82,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        System.out.println("SecurityConfig");
         http
                 .csrf().disable()
                 .userDetailsService(userDetailsService)
@@ -116,7 +113,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                 .antMatchers(
                         "/api/v1.0/tokens",
                         "/page/**",
-                        "/oauth/**",
                         "/logout",
                         "/templates/**",
                         "/resources/**",
@@ -126,7 +122,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                         "/javascript/**",
                         "/jsp/**")
                 .permitAll()
-
         ;
 
     }

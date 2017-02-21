@@ -45,7 +45,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.
-                 csrf().disable()
+                csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
@@ -80,14 +80,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/logout",
                         "/templates/**",
                         "/resources/**",
-                        "/oauth/**",
                         "/js/**",
                         "/img/**",
                         "/static/**",
                         "/webapp/**",
                         "/javascript/**",
                         "/jsp/**").permitAll()
-                .antMatchers("/**").authenticated();
+        ;
 
     }
 

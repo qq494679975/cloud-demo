@@ -33,6 +33,16 @@
             </td>
         </tr>
         <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp; 通过code获取token</td>
+            <td>code:<input id="authorizationCode_model_code" /></td>
+            <td>client_id:<input id="authorizationCode_model_code_client_id" value="mobile-client"/></td>
+            <td>client_secret:<input id="authorizationCode_model_code_client_secret" value="mobile"/></td>
+            <td>url:<input id="authorizationCode_model_code_url" value="http://localhost:8082/page/menuPage"/></td>
+            <td>
+                <div id="authorizationCode_mode_model">获取accecc_token</div>
+            </td>
+        </tr>
+        <tr>
             <td colspan="6">
                 <div id="authorizationCode_model_code_return"></div>
             </td>
@@ -40,9 +50,9 @@
 
         <tr>
             <td>密码模式</td>
-            <td>账号:<input id="password_model_username"/></td>
-            <td>密码:<input id="password_model_password"/></td>
-            <td>client_id:<input id="password_model_client_id"/></td>
+            <td>账号:<input id="password_model_username" value="mobile"/></td>
+            <td>密码:<input id="password_model_password" value="mobile"/></td>
+            <td>client_id:<input id="password_model_client_id" value="mobile-client"/></td>
             <td>
                 <div id="password_model">获取accecc_token</div>
             </td>
@@ -58,9 +68,9 @@
         </tr>
         <tr>
             <td>客户端模式</td>
-            <td>client_id:<input id="client_credentials_model_client_id"/></td>
-            <td>client_secret:<input id="client_credentials_model_client_secret"/></td>
-            <td>scope:<input id="client_credentials_model_scope"/></td>
+            <td>client_id:<input id="client_credentials_model_client_id" value="mobile-client"/></td>
+            <td>client_secret:<input id="client_credentials_model_client_secret" value="mobile"/></td>
+            <td>scope:<input id="client_credentials_model_scope" value="read"/></td>
             <td>
                 <div id="client_credentials_model">获取accecc_token</div>
             </td>
@@ -112,7 +122,7 @@
                     "client_id":$("#authorizationCode_model_client_id").val(),// 'mobile-client' admin
                     "redirect_uri":"http://localhost:8082/page/menuPage",
                     "response_type":"code",
-                    "scope":"read write",
+                    "scope":"read",
                     "state":"you_status"
                 },
                 headers : {
@@ -123,8 +133,27 @@
                 }
             })
         })
-
-
+        //客户端模式获取accesstoken
+        $("#authorizationCode_mode_model").click(function () {
+            $.ajax({
+                url: '/oauth/rest_token',
+                type: 'POST', //GET
+                async: true,    //或false,是否异步
+                data: JSON.stringify({
+                    "client_id":  $("#authorizationCode_model_code_client_id").val(),//"mobile-client"
+                    "client_secret": $("#authorizationCode_model_code_client_secret").val(),//admin
+                    "code":  $("#authorizationCode_model_code").val(),//"mobile-client"
+                    "redirect_uri":$("#authorizationCode_model_code_url").val(),
+                    "grant_type": "authorization_code"
+                }),
+                headers : {
+                    'Content-Type' : 'application/json;charset=utf-8'
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $("#authorizationCode_model_code_return").text(JSON.stringify(data));
+                }
+            })
+        })
         //密码模式
         $("#password_model").click(function () {
             $.ajax({

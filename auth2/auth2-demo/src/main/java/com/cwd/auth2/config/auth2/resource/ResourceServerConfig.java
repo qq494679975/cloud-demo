@@ -21,9 +21,9 @@ import javax.annotation.Resource;
  * Created by Administrator on 2017/1/11.
  * 资源服务器
  */
-@Configuration
-@EnableResourceServer
-@Scope("singleton")
+//@Configuration
+//@EnableResourceServer
+//@Scope("singleton")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -55,16 +55,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .loginProcessingUrl("/formLogin")
                 .passwordParameter("password")
                 .usernameParameter("username")
-                .successForwardUrl("/page/indexPage")
+                .successForwardUrl("/page/oauthApproval")
                 .failureForwardUrl("/page/errorPage")
                 .and()
                 .logout()
                 .logoutUrl("/oauth/logout")
                 .logoutSuccessHandler(customLogoutSuccessHandler)
                 .and()
-                .csrf()
-                .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
-                .disable()
                 .headers()
                 .frameOptions().disable()
                 .and()

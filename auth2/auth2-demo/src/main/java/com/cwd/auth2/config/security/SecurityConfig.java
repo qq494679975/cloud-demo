@@ -73,6 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                 .antMatchers(
                         "/login.ftl",
                         "/logout",
+                        "/oauth/rest_token",
+                        "/oauth/confirm_access",
                         "/resources/**",
                         "/page/**",
                         "/jsp/**");
@@ -89,23 +91,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                 .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)
                 .and()
                 .formLogin()
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                        System.out.println("授权失败");
-                        request.getRequestDispatcher("/page/loginPage?error").forward(request, response);
-                    }
-                })
                 .loginPage("/page/loginPage")
                 .failureUrl("/page/loginPage?error")
                 .loginProcessingUrl("/formLogin")  //默认  j_spring_security_check
                 .passwordParameter("password")
                 .usernameParameter("username")
-                .successForwardUrl("/page/indexPage")
-                .failureForwardUrl("/page/loginPage")
+                //.successForwardUrl("/page/oauthApproval")
+                .failureForwardUrl("/page/loginPage?error")
                 .permitAll()
                 .and()
-                .logout().logoutUrl("/logout").clearAuthentication(true)
+                .logout().logoutUrl("/logout")
                 .and()
                 .authorizeRequests()
                 .anyRequest()

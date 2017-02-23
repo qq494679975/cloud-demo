@@ -1,70 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--logback socket方式发送日志-->
 <!--<configuration>-->
-    <!--<appender name="socket" class="ch.qos.logback.classic.net.SocketAppender">-->
-        <!--<remoteHost>192.168.116.242</remoteHost>-->
-        <!--<port>44444</port>-->
-        <!--&lt;!&ndash; 10秒重新链接&ndash;&gt;-->
-        <!--<reconnectionDelay>10</reconnectionDelay>-->
-        <!--&lt;!&ndash; 是否包含调用者的信息 如果为true，则以下日志输出的 ?:? 会替换成调用者的文件名跟行号，为false，则为问号。&ndash;&gt;-->
-        <!--<includeCallerData>true</includeCallerData>-->
-        <!--&lt;!&ndash; 缓冲队列 满的在发送&ndash;&gt;-->
-        <!--<queueSize>0</queueSize>-->
-        <!--&lt;!&ndash; 设置日志超时丢弃时间。当设置“10 seconds”类似的值，如果日志队列已满，而服务器长时间来不及接收，当滞留时间超过10 seconds，日志就会被丢弃&ndash;&gt;-->
-        <!--<eventDelayLimit>0</eventDelayLimit>-->
-    <!--</appender>-->
-    <!--<appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
-        <!--<encoder>-->
-            <!--<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
-        <!--</encoder>-->
-    <!--</appender>-->
-    <!--<logger name="test" level="INFO"/>-->
+<!--<appender name="socket" class="ch.qos.logback.classic.net.SocketAppender">-->
+<!--<remoteHost>192.168.116.242</remoteHost>-->
+<!--<port>44444</port>-->
+<!--&lt;!&ndash; 10秒重新链接&ndash;&gt;-->
+<!--<reconnectionDelay>10</reconnectionDelay>-->
+<!--&lt;!&ndash; 是否包含调用者的信息 如果为true，则以下日志输出的 ?:? 会替换成调用者的文件名跟行号，为false，则为问号。&ndash;&gt;-->
+<!--<includeCallerData>true</includeCallerData>-->
+<!--&lt;!&ndash; 缓冲队列 满的在发送&ndash;&gt;-->
+<!--<queueSize>0</queueSize>-->
+<!--&lt;!&ndash; 设置日志超时丢弃时间。当设置“10 seconds”类似的值，如果日志队列已满，而服务器长时间来不及接收，当滞留时间超过10 seconds，日志就会被丢弃&ndash;&gt;-->
+<!--<eventDelayLimit>0</eventDelayLimit>-->
+<!--</appender>-->
+<!--<appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--<encoder>-->
+<!--<pattern>%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+<!--</encoder>-->
+<!--</appender>-->
+<!--<logger name="test" level="INFO"/>-->
 
-    <!--<root level="INFO">-->
-        <!--<appender-ref ref="socket"/>-->
-        <!--<appender-ref ref="console"/>-->
-    <!--</root>-->
+<!--<root level="INFO">-->
+<!--<appender-ref ref="socket"/>-->
+<!--<appender-ref ref="console"/>-->
+<!--</root>-->
 <!--</configuration>-->
 
-<configuration debug="true">
-    <appender name="flume" class="com.cwd.logback.FlumeLogbackAppender">
-        <!--flume服务器 支持多个逗号分割-->
-        <flumeAgents>
-            localhost:44444
-        </flumeAgents>
-        <flumeProperties>
-            connect-timeout=4000;
-            request-timeout=8000
-        </flumeProperties>
-        <batchSize>100</batchSize>
-        <reportingWindow>1000</reportingWindow>
-        <additionalAvroHeaders>myHeader=myValue</additionalAvroHeaders>
-        <application>smapleapp</application>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <!--{createDate:%d{yy-MM-dd:HH:mm:ss.SSS},logLevel:%-5level,class:%logger{36},logIndex:\(%file:%line\),message:%message%n%ex}-->
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - \(%file:%line\) - %message%n%ex</pattern>
-        </layout>
-    </appender>
+<!--logback 直接发送flume日志-->
+<!--<configuration debug="true">-->
+<!--<appender name="flume" class="com.cwd.logback.FlumeLogbackAppender">-->
+<!--&lt;!&ndash;flume服务器 支持多个逗号分割&ndash;&gt;-->
+<!--<flumeAgents>-->
+<!--localhost:44444-->
+<!--</flumeAgents>-->
+<!--<flumeProperties>-->
+<!--connect-timeout=4000;-->
+<!--request-timeout=8000-->
+<!--</flumeProperties>-->
+<!--<batchSize>100</batchSize>-->
+<!--<reportingWindow>1000</reportingWindow>-->
+<!--<additionalAvroHeaders>myHeader=myValue</additionalAvroHeaders>-->
+<!--<application>smapleapp</application>-->
+<!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+<!--&lt;!&ndash;{createDate:%d{yy-MM-dd:HH:mm:ss.SSS},logLevel:%-5level,class:%logger{36},logIndex:\(%file:%line\),message:%message%n%ex}&ndash;&gt;-->
+<!--<pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - \(%file:%line\) - %message%n%ex</pattern>-->
+<!--</layout>-->
+<!--</appender>-->
 
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
-        </filter>
-        <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - \(%file:%line\) - %message%n%ex</pattern>
+<!--<appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--<level>INFO</level>-->
+<!--</filter>-->
+<!--<encoder>-->
+<!--<pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - \(%file:%line\) - %message%n%ex</pattern>-->
+<!--</encoder>-->
+<!--</appender>-->
+
+<!--<logger name="play" level="INFO" />-->
+<!--<logger name="application" level="DEBUG" />-->
+
+<!--&lt;!&ndash; Off these ones as they are annoying, and anyway we manage configuration ourselves &ndash;&gt;-->
+<!--<logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />-->
+<!--<logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />-->
+<!--<logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF" />-->
+<!--<logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />-->
+
+<!--<root level="INFO">-->
+<!--<appender-ref ref="flume" />-->
+<!--<appender-ref ref="console"/>-->
+<!--</root>-->
+<!--</configuration>-->
+<!--文件输出-->
+<configuration>
+    <appender name="rollingAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/usr/local/demo/heuristic.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/usr/local/demo/heuristic-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder><!-- 必须指定，否则不会往文件输出内容 -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</pattern>
         </encoder>
+        <append>false</append>
+        <prudent>false</prudent>
     </appender>
 
-    <logger name="play" level="INFO" />
-    <logger name="application" level="DEBUG" />
-
-    <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
-    <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />
-    <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />
-    <logger name="com.avaje.ebeaninternal.server.lib.BackgroundThread" level="OFF" />
-    <logger name="com.gargoylesoftware.htmlunit.javascript" level="OFF" />
-
-    <root level="INFO">
-        <appender-ref ref="flume" />
-        <appender-ref ref="console"/>
+    <root level="DEBUG">
+        <appender-ref ref="rollingAppender" />
     </root>
 </configuration>

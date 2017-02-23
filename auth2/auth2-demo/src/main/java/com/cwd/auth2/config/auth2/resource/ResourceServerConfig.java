@@ -42,49 +42,17 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 tokenStore(jdbcTokenStore);
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.
-                csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(customAuthenticationEntryPoint)
-                .and()
-                .formLogin()
-                .loginPage("/page/loginPage")
-                .failureUrl("/page/loginPage?error")
-                .loginProcessingUrl("/formLogin")
-                .passwordParameter("password")
-                .usernameParameter("username")
-                .successForwardUrl("/page/oauthApproval")
-                .failureForwardUrl("/page/errorPage")
-                .and()
-                .logout()
-                .logoutUrl("/oauth/logout")
-                .logoutSuccessHandler(customLogoutSuccessHandler)
-                .and()
-                .headers()
-                .frameOptions().disable()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .fullyAuthenticated()
-                .antMatchers(
-                        "/api/v1.0/tokens",
-                        "/page/**",
-                        "/logout",
-                        "/templates/**",
-                        "/resources/**",
-                        "/js/**",
-                        "/img/**",
-                        "/static/**",
-                        "/webapp/**",
-                        "/javascript/**",
-                        "/jsp/**").permitAll()
-        ;
-
-    }
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http.
+//                csrf().disable()
+//                .exceptionHandling()
+//                .authenticationEntryPoint(customAuthenticationEntryPoint)
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//        ;
+//
+//    }
 
 }

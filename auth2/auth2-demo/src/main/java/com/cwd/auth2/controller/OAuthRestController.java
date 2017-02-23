@@ -11,7 +11,7 @@ package com.cwd.auth2.controller;/*
  */
 
 import com.cwd.auth2.service.EHRAuthorizationCodeServices;
-import com.cwd.auth2.config.auth2.authorization.EHRJdbcClientDetailsService;
+import com.cwd.auth2.config.auth2.authorization.CWDJdbcClientDetailsService;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +63,7 @@ public class OAuthRestController implements InitializingBean {
     private static final Logger LOG = LoggerFactory.getLogger(OAuthRestController.class);
 
     @Autowired
-    private EHRJdbcClientDetailsService clientDetailsService;
+    private CWDJdbcClientDetailsService clientDetailsService;
     @Resource(name = "ehrTokenServices")
     private AuthorizationServerTokenServices tokenServices;
     @Autowired

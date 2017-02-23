@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by Administrator on 2017/1/18.
  */
 @Component
-public class EHRAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class CWDAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         System.out.println("EHRAuthenticationEntryPoint");

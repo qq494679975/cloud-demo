@@ -33,12 +33,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Resource(name = "ehrJdbeTokenStore")
     private JdbcTokenStore jdbcTokenStore;
     @Autowired
-    private ResourceServerTokenServices ehrTokenServices;
+    private ResourceServerTokenServices resourceServerTokenServices;
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
         resources.
-                tokenServices(ehrTokenServices).
+                tokenServices(resourceServerTokenServices).
                 tokenStore(jdbcTokenStore);
     }
 

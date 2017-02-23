@@ -1,12 +1,11 @@
 package com.cwd.auth2.config.security;
 
-import com.cwd.auth2.config.auth2.authorization.EHRAuthenticationEntryPoint;
+import com.cwd.auth2.config.auth2.authorization.CWDAuthenticationEntryPoint;
 import com.cwd.auth2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,16 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Created by Administrator on 2017/1/10.
@@ -37,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
     @Autowired
     private UserService userDetailsService;
     @Autowired
-    private EHRAuthenticationEntryPoint ehrAuthenticationEntryPoint;
+    private CWDAuthenticationEntryPoint ehrAuthenticationEntryPoint;
 
     //==========密码加密方式====================
     @Bean

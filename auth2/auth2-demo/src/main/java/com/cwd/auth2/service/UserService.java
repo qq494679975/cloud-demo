@@ -1,6 +1,6 @@
 package com.cwd.auth2.service;
 
-import com.cwd.auth2.config.auth2.authorization.EHRJdbcClientDetailsService;
+import com.cwd.auth2.config.auth2.authorization.CWDJdbcClientDetailsService;
 import com.cwd.auth2.dao.UserDao;
 import com.cwd.auth2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
-    private EHRJdbcClientDetailsService clientDetailsService;
+    private CWDJdbcClientDetailsService clientDetailsService;
     @Autowired
     private UserDao userDao;
 

@@ -1,8 +1,11 @@
 package com.cwd.auth2.config.auth2.resource;
 
+import com.cwd.auth2.config.auth2.authorization.CWDAuthenticationEntryPoint;
+import com.cwd.auth2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.annotation.Order;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -21,15 +24,15 @@ import javax.annotation.Resource;
  * Created by Administrator on 2017/1/11.
  * 资源服务器
  */
+//@Order(2)
 //@Configuration
 //@EnableResourceServer
-//@Scope("singleton")
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Autowired
-    private CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private UserService userDetailsService;
     @Autowired
-    private CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    private CWDAuthenticationEntryPoint ehrAuthenticationEntryPoint;
     @Resource(name = "ehrJdbeTokenStore")
     private JdbcTokenStore jdbcTokenStore;
     @Autowired
@@ -42,17 +45,41 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 tokenStore(jdbcTokenStore);
     }
 
-//    @Override
-//    public void configure(HttpSecurity http) throws Exception {
-//        http.
-//                csrf().disable()
-//                .exceptionHandling()
-//                .authenticationEntryPoint(customAuthenticationEntryPoint)
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//        ;
-//
-//    }
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .userDetailsService(userDetailsService)
+                .anonymous().disable()
+                .httpBasic().authenticationEntryPoint(ehrAuthenticationEntryPoint)
+                .and()
+                .formLogin()
+                .loginPage("/page/loginPage")
+                .failureUrl("/page/loginPage?error")
+                .loginProcessingUrl("/formLogin")  //默认  j_spring_security_check
+                .passwordParameter("password")
+                .usernameParameter("username")
+                //.successForwardUrl("/page/oauthApproval")
+                .failureForwardUrl("/page/loginPage?error")
+                .permitAll()
+                .and()
+                .logout().logoutUrl("/logout")
+                .and()
+                .authorizeRequests()
+                .anyRequest()
+                .fullyAuthenticated()
+                .antMatchers(
+                        "/api/v1.0/tokens",
+                        "/page/**",
+                        "/logout",
+                        "/templates/**",
+                        "/resources/**",
+                        "/js/**",
+                        "/img/**",
+                        "/static/**",
+                        "/javascript/**",
+                        "/jsp/**")
+                .permitAll();
+    }
 
 }

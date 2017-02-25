@@ -10,6 +10,7 @@ package com.cwd.auth2.controller;/*
  * entered into with MONKEYK Information Technology Co. Ltd.
  */
 
+import com.cwd.auth2.service.EHRAccessTokenService;
 import com.cwd.auth2.service.EHRAuthorizationCodeServices;
 import com.cwd.auth2.config.auth2.authorization.CWDJdbcClientDetailsService;
 import io.swagger.annotations.Api;
@@ -17,7 +18,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.*;
@@ -37,6 +40,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Map;
 
@@ -70,6 +75,9 @@ public class OAuthRestController implements InitializingBean {
     private EHRAuthorizationCodeServices authorizationCodeServices;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private EHRAccessTokenService ehrAccessTokenService;
+
     private OAuth2RequestFactory oAuth2RequestFactory;
     private OAuth2RequestValidator oAuth2RequestValidator = new DefaultOAuth2RequestValidator();
     private WebResponseExceptionTranslator providerExceptionHandler = new DefaultWebResponseExceptionTranslator();
@@ -220,6 +228,25 @@ public class OAuthRestController implements InitializingBean {
         return providerExceptionHandler;
     }
 
+    /**
+     * 判断token是否过期
+     *
+     * @param client_id
+     * @return
+     */
+    @RequestMapping(value = "/token_is_outTime")
+    @ResponseBody
+    public String postAccessToken(String client_id) {
+
+        try {
+            OAuth2AccessToken accessToken = ehrAccessTokenService.getAccessTokenByClientId(client_id);
+            return String.valueOf(accessToken.isExpired());
+        } catch (Exception e) {
+
+        }
+        return "true";
+
+    }
 
 
 }

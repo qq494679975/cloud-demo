@@ -114,6 +114,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setSupportRefreshToken(true);//支持更新
         defaultTokenServices.setTokenStore(getJdbeTokenStore());
+
         return defaultTokenServices;
     }
     /**

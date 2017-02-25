@@ -11,7 +11,7 @@ spring:
     config:
       server:
         git:
-          uri: http://192.168.1.220:10080/chenweida/ehr.config.git
+          uri: http://192.168.116.100:10080/chenweida/cloud-config.git
       profile: dev
 
 
@@ -23,6 +23,6 @@ spring:
     config:
       server:
         git:
-          uri: http://192.168.1.220:10080/chenweida/ehr.config.git
+          uri: http://192.168.116.100:10080/chenweida/cloud-config.git
         default-label: home
 

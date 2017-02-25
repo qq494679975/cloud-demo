@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter //继承 WebSec
                         "/login.ftl",
                         "/logout",
                         "/oauth/rest_token",
+                        "/oauth/token_is_outTime",
                         "/oauth/confirm_access",
                         "/resources/**",
                         "/page/**",

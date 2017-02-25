@@ -11,19 +11,6 @@ spring:
       validation-query: SELECT 1
       test-on-borrow: true
 
-  redis:
-    database: 0 # Database index used by the connection factory.
-    port: 6379 # Redis server port.
-    timeout: 0 # Connection timeout in milliseconds.
-      #sentinel:
-      #  master: # Name of Redis server.
-      #  nodes: # Comma-separated list of host:port pairs.
-    pool:
-      max-active: 8 # Max number of connections that can be allocated by the pool at a given time. Use a negative value for no limit.
-      max-idle: 8 # Max number of "idle" connections in the pool. Use a negative value to indicate an unlimited number of idle connections.
-      max-wait: -1 # Maximum amount of time (in milliseconds) a connection allocation should block before throwing an exception when the pool is exhausted. Use a negative value to block indefinitely.
-      min-idle: 1 # Target for the minimum number of idle connections to maintain in the pool. This setting only has an effect if it is positive.
-
   jpa:
     database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
@@ -31,46 +18,13 @@ spring:
   session:
       store-type: HASH_MAP
 
-  mail:
-    protocol: smtp
-    host: smtp.qq.com
-    port: 465
-    username: 1501877145
-    password: uszpslqcwrcbgigg
-    to: 494679975@qq.com
-    from: 1501877145@qq.com
-    authMM: uszpslqcwrcbgigg
-    properties:
-      mail:
-        transport:
-        smtp:
-          auth: true #是否开始权限验证
-          ssl:
-            enable: true #使用sslmail.transport.protocol
 
 ---
-
 spring:
   profiles: dev
 
-  redis:
-    host: 172.19.103.47 # Redis server host.
-
-
   datasource:
-    url: jdbc:mysql://172.19.103.77/wlyy?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1/cloud?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     username: root
     password: 123456
----
 
-spring:
-  profiles: home
-
-  redis:
-    host: 172.19.103.47 # Redis server host.
-
-
-  datasource:
-    url: jdbc:mysql://172.19.103.77/wlyy?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
-    username: root
-    password: 123456

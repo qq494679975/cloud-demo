@@ -8,7 +8,7 @@ import scala.beans.BeanProperty
   * Created by Administrator on 2016.10.26.
   */
 @Entity
-@Table(name = "wlyy_user")
+@Table(name = "user")
 class User() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

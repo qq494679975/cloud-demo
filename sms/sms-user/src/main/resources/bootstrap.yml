@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: user
+
+logging:
+  level:
+    com:
+      netflix: INFO
+    org:
+      springframework:
+        web: INFO
+      hibernate: INFO
+
+---
+spring:
+  profiles: dev
+
+  cloud:
+    config:
+      username: chenweida
+      password: 123456
+      uri: http://127.0.0.1:1221
+      label: dev
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+

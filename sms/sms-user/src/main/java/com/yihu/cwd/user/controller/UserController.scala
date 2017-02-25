@@ -5,9 +5,6 @@ import com.yihu.cwd.user.model.User
 import com.yihu.cwd.user.service.UserService
 import io.swagger.annotations.Api
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.redis.core.{StringRedisTemplate, RedisTemplate}
-import org.springframework.mail._
-import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.web.bind.annotation.{RequestMethod, ResponseBody, RequestMapping, RestController}
 
 /**
@@ -19,10 +16,6 @@ import org.springframework.web.bind.annotation.{RequestMethod, ResponseBody, Req
 class UserController {
   @Autowired
   private var userService:UserService=_
-  @Autowired
-  private var redisTemplate: StringRedisTemplate=_
-  @Autowired
-  private var mailSender: JavaMailSender = _
 
   @RequestMapping(value = Array("/getUserById"), method = Array(RequestMethod.GET))
   @ResponseBody

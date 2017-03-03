@@ -25,9 +25,9 @@ public class EHRAccessTokenService {
 
     public OAuth2AccessToken getAccessTokenByClientId(String client_id) {
         OAuth2AccessToken accessToken = null;
-
+        String sql="select token_id, token,max(create_time)  from oauth_access_token where client_id = ?";
         try {
-            accessToken = jdbcTemplate.queryForObject("select token_id, token,max(create_time)  from oauth_access_token where client_id = ?",
+            accessToken = jdbcTemplate.queryForObject(sql,
                     new RowMapper<OAuth2AccessToken>() {
                         public OAuth2AccessToken mapRow(ResultSet rs, int rowNum) throws SQLException {
                             return deserializeAccessToken(rs.getBytes(2));

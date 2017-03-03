@@ -24,4 +24,13 @@ class User() {
     @BeanProperty
     var birthday=new Date()
 
+    def this(id:Int,username:String,birthday:Date) {
+        this()//这个必须要
+        this.id=id;
+        this.username=username;
+        this.birthday=birthday;
+    }
+
+
+    override def toString = s"User($id, $username, $birthday)"
 }

@@ -1,6 +1,6 @@
 spring:
   application:
-    name: user
+    name: user111111
 
 logging:
   level:

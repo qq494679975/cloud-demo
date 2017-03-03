@@ -5,7 +5,8 @@
 
 auth2
   spring-security-oauth2 的例子
-  目前支持密码模式和刷新（更新中）
+  目前支持密码模式,授权码模式,客户端模式，刷新access_token
+  
 checkpoint
   做spark的时候缓存，可以无视
   

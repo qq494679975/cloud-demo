@@ -1,5 +1,5 @@
 server:
-  port: 443
+  port: 8888
 
 management:
   port: ${server.port}
@@ -13,25 +13,25 @@ logging:
         web: INFO
       hibernate: ERROR
 
-ribbon:
-  ReadTimeout: 30000
-  ConnectTimeout: 10000
-
-logging.level.root: INFO
-
-netflix:
-  metrics:
-    rest:
-      metricName: api
-
-# service routes
-zuul:
-  addProxyHeaders: false
-  ignoredServices: '*'
-  routes:
-    packages:
-      path: /api/v1.0/packages
-      serviceId: svr-pack-mgr
+#ribbon:
+#  ReadTimeout: 30000
+#  ConnectTimeout: 10000
+#
+#logging.level.root: INFO
+#
+#netflix:
+#  metrics:
+#    rest:
+#      metricName: api
+#
+## service routes
+#zuul:
+#  addProxyHeaders: false
+#  ignoredServices: '*'
+#  routes:
+#    packages:
+#      path: /api/v1.0/packages
+#      serviceId: svr-pack-mgr
 
 
 ---

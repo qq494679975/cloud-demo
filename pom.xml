@@ -17,6 +17,7 @@
         <module>config</module>
         <module>discovery</module>
         <module>gateway</module>
+        <module>auth2/auth2-demo</module>
         <module>common-util/common-quartz</module>
         <module>common-util/common-jdbc</module>
         <module>common-util/common-swagger</module>
@@ -34,7 +35,7 @@
         <module>sms/sms-spark-demo</module>
         <module>sms/sms-test-log</module>
         <module>sms/sms-spark-streaming-kafka</module>
-        <module>auth2/auth2-demo</module>
+        <module>sms/sms-hadoop-demo</module>
     </modules>
     <packaging>pom</packaging>
     <name>cwd-cloud</name>

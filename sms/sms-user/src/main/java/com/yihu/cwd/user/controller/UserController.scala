@@ -20,7 +20,8 @@ class UserController {
   @RequestMapping(value = Array("/getUserById"), method = Array(RequestMethod.GET))
   @ResponseBody
   def getUserById(userId:Integer): (User) = {
-     userService.getUserById(userId)
+     val user =userService.getUserById(userId)
+     return user
   }
 
 

@@ -9,8 +9,8 @@ import org.springframework.cloud.config.server.EnableConfigServer
   * Created by Administrator on 2016.10.24.
   */
 @SpringBootApplication
-@EnableConfigServer
-@EnableDiscoveryClient
+@EnableConfigServer // 启动配置服务
+@EnableDiscoveryClient //开启注册到发现服务
 class ConfigApp {
 }
 

@@ -4,7 +4,6 @@ import java.util.UUID
 
 import com.cwd.util.HBaseUtil
 import kafka.serializer.StringDecoder
-import net.sf.json.JSONObject
 import org.apache.hadoop.hbase.{HColumnDescriptor, HTableDescriptor, TableName, HBaseConfiguration}
 import org.apache.hadoop.hbase.client._
 import org.apache.spark.SparkConf

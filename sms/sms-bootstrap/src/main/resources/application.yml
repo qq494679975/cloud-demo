@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    dbcp:
+      max-active:
+      max-idle: 8
+      min-idle: 8
+      validation-query: SELECT 1
+      test-on-borrow: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+
+  session:
+      store-type: HASH_MAP
+
+
+
+---
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    username: root
+    password: 123456

@@ -16,11 +16,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
   */
 @Configuration
 @EnableSwagger2
-class SwaggerConfig extends WebMvcConfigurerAdapter{
+class SwaggerConfigSwaggerConfig extends WebMvcConfigurerAdapter{
   private val PUBLIC_API: String = "Default"
 
   override def addResourceHandlers(registry: ResourceHandlerRegistry) {
-    registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/")
+    registry.addResourceHandler("swagger.html").addResourceLocations("classpath:/META-INF/resources/")
     registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
   }
 

@@ -1,7 +1,7 @@
 package com.cwd.controller
 
 import com.cwd.service.LogService
-import io.swagger.annotations.Api
+import io.swagger.annotations.{ApiOperation, Api}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.{RequestMethod, RequestMapping, RestController}
 
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.{RequestMethod, RequestMapping, R
 class LogController {
   @Autowired
   var logservice: LogService = _
+
 
   @RequestMapping(value = Array("/produceLog"), method = Array(RequestMethod.GET))
   def produceLog(): Unit = {

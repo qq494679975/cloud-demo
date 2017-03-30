@@ -25,6 +25,6 @@ spring:
   profiles: dev
 
   datasource:
-    url: jdbc:mysql://127.0.0.1/test?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1/cloud-bootstrap?useUnicode=true&characterEncoding=utf-8&autoReconnect=true
     username: root
     password: 123456

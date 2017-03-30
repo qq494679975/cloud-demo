@@ -102,6 +102,16 @@
             <version>${version.mysql}</version>
             <scope>${dependency.scope}</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160212</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>sms-bootstrap</finalName>

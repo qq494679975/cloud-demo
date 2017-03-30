@@ -27,15 +27,14 @@
         </div>
         <h3>欢迎</h3>
 
-        <form class="m-t" role="form" action="index.html">
+        <form class="m-t" role="form"  id="loginForm" onsubmit="return login()">
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="用户名" required="">
+                <input id="username" name="username" type="text" class="form-control" placeholder="用户名" required="">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="密码" required="">
+                <input id="password" name="password"  type="password" class="form-control" placeholder="密码" required="">
             </div>
-            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
-
+            <button id="loginBtn" type="submit" class="btn btn-primary block full-width m-b">登 录</button>
 
             <p class="text-muted text-center">
                 <a href="login.html#"><small>忘记密码了？</small></a> |
@@ -49,7 +48,29 @@
 <!-- 全局js -->
 <script src="/common/js/jquery/jquery-2.1.1.min.js"></script>
 <script src="/common/js/bootstrap/bootstrap.min.js"></script>
-<script src="/login/login.js"></script>
+<script type="text/javascript" >
+    function login(){
+        var username=$("#username").val();
+        var password=$("#password").val();
+        $.ajax({
+            type: "GET",
+            url: "/login",
+            data: {
+                "username":username,
+                "password":password
+            },
+            dataType: "json",
+            success: function(data){
+                if(data.status==200){
+                    window.location.href='/index/index.jsp?u='+data.user.id;
+                }else{
+                    alert("账号或密码错误")
+                }
+            }
+        });
+        return false;
+    }
+</script>
 
 </body>
 

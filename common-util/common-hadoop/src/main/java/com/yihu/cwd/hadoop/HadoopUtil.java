@@ -17,7 +17,7 @@ import java.net.URI;
  */
 public class HadoopUtil {
     //private static String uri = "hdfs://192.168.116.132:9000/";
-    private static String uri = "hdfs://192.168.59.240:9000/";
+    private static String uri = "hdfs://192.168.116.200:8022/";
     private static Configuration config = new Configuration();
 
     public static FileSystem getFileSystem() throws Exception {
@@ -98,7 +98,7 @@ public class HadoopUtil {
      */
     public static void fileUploadCopy(String path) throws Exception {
         FileSystem fs = getFileSystem();
-        fs.copyFromLocalFile(new Path(path), new Path("/test/kafka.jar"));
+        fs.copyFromLocalFile(new Path(path), new Path("/cwd/test1.log"));
         fs.close();
 
     }
@@ -211,9 +211,9 @@ public class HadoopUtil {
         // File a=new File("G:/tmp/logs/wly.log");
         // a.createNewFile();
         //fileUpload();
-        //downLoad("/user/Administrator/test/test.log");
+        //downLoad("/spark/test.log");
         // createDir("hadoop");
-        fileUploadCopy("g:/12.jar");
+        fileUploadCopy("C:/Users/Administrator/Desktop/data.txt");
     }
 
 }

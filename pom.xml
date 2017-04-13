@@ -36,6 +36,8 @@
         <module>sms/sms-test-log</module>
         <module>sms/sms-spark-streaming-kafka</module>
         <module>sms/sms-hadoop-demo</module>
+        <module>sms/sms-bootstrap</module>
+        <module>sms/sms-dev-tools</module>
     </modules>
     <packaging>pom</packaging>
     <name>cwd-cloud</name>

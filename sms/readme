@@ -1,2 +1,7 @@
 业务代码的微服务
 sms-user  用户管理模块的微服务代码
+sms-bootstrap 结合bootstrap的例子（开发中）
+sms-dev-tools 热部署的例子 (已结束)
+sms-hadoop-demo hadoop的例子 （开发中）
+sms-spark-demo spark的例子 （开发中）
+sms-test-log  logback到flume的例子 (已结束)

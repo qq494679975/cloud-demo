@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by chenweida on 2017/4/13.
+ * 修改完之后 项目会自动重启
+ * 不管是修改类，方法 还是代码
  */
 @RestController
 public class Controller {

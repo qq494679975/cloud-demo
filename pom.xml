@@ -94,7 +94,7 @@
         <version.pinyin4j>2.5.0</version.pinyin4j>
         <version.quartz>2.2.3</version.quartz>
         <version.slf4j>1.7.21</version.slf4j>
-        <version.solr>5.5.1</version.solr>
+        <version.solr>8.4.1</version.solr>
         <version.activemq>5.14.1</version.activemq>
         <version.statsd-client>3.1.0</version.statsd-client>
         <version.swagger>2.4.0</version.swagger>

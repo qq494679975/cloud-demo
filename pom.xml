@@ -86,7 +86,7 @@
         <version.jcl-over-slf4j>1.7.19</version.jcl-over-slf4j>
         <version.jul-over-slf4j>1.7.21</version.jul-over-slf4j>
         <version.joda-time>2.8.2</version.joda-time>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.log4j>1.2.17</version.log4j>
         <version.log4j-over-slf4j>1.7.21</version.log4j-over-slf4j>
         <version.log4j2>2.4.1</version.log4j2>

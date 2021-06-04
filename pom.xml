@@ -77,7 +77,7 @@
         <version.hbase-client>1.1.1</version.hbase-client>
         <version.hibernate>5.2.3.Final</version.hibernate>
         <version.hibernate-jpa-api>1.0.0.Final</version.hibernate-jpa-api>
-        <version.http-client>4.5.1</version.http-client>
+        <version.http-client>4.5.13</version.http-client>
         <version.http-core>4.4.3</version.http-core>
         <version.io-dropwizard-metrics>3.1.2</version.io-dropwizard-metrics>
         <version.java>1.8</version.java>

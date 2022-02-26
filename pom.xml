@@ -102,7 +102,7 @@
         <version.thrift>0.9.1</version.thrift>
         <version.tomcat-embed>8.0.28</version.tomcat-embed>
         <version.websocket-api>1.1</version.websocket-api>
-        <version.zip4j>1.3.2</version.zip4j>
+        <version.zip4j>2.9.1</version.zip4j>
         <version.poi>3.12</version.poi>
         <version.scala>2.10.6</version.scala>
         <version.spark>1.6.0</version.spark>
